@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "module": "commonjs",    
+    "allowJs": true,                                  
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,                                            
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "types": ["node", "express", "./src/@types/express/types.d.ts"]
+  }
+}
