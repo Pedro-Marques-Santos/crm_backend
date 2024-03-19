@@ -11,6 +11,8 @@ interface IEmploymentRepository {
     workmodality,
     city,
     region,
+    ourparticipants,
+    questionaboutjob,
   }: IEmployment): Promise<IEmployment>;
 }
 

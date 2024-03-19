@@ -24,18 +24,19 @@ class CreateEmploymentUseCase {
     city,
     region,
     idgoogle,
-    questionAboutJob,
+    questionaboutjob,
+    ourparticipants,
   }: IEmploymentUseCase): Promise<IEmployment> {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
 
     if (!company) {
-      throw new AppError("company não existe!", 400);
+      throw new AppError("Company was not found in the system!", 400);
     }
 
-    if (questionAboutJob && questionAboutJob.length > 2) {
+    if (questionaboutjob && questionaboutjob.length > 2) {
       throw new AppError(
-        "o usuário pode somente fazer duas perguntas ao colaborador!",
-        400,
+        "The user can only ask two questions to the collaborator!",
+        409,
       );
     }
 
@@ -49,11 +50,12 @@ class CreateEmploymentUseCase {
       workmodality,
       city,
       region,
-      questionAboutJob,
+      questionaboutjob,
+      ourparticipants,
     });
 
     if (!emploment._id) {
-      throw new AppError("erro ao tentar criar vaga de emprego!", 400);
+      throw new AppError("Error when trying to create a job vacancy!", 500);
     }
 
     const modifycompany = await this.companyRepository.addJobOpportunity(
@@ -62,7 +64,7 @@ class CreateEmploymentUseCase {
     );
 
     if (!modifycompany) {
-      throw new AppError("company não existe!", 400);
+      throw new AppError("Error when trying to create a job vacancy!!", 500);
     }
 
     return emploment;

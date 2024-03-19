@@ -13,7 +13,8 @@ class EmploymentRepository implements IEmploymentRepository {
     workmodality,
     city,
     region,
-    questionAboutJob,
+    questionaboutjob,
+    ourparticipants,
   }: IEmployment): Promise<IEmployment> {
     const employment = new Employment({
       name,
@@ -25,7 +26,8 @@ class EmploymentRepository implements IEmploymentRepository {
       workmodality,
       city,
       region,
-      questionAboutJob,
+      questionaboutjob,
+      ourparticipants,
     });
 
     const employmentResult = await employment.save();

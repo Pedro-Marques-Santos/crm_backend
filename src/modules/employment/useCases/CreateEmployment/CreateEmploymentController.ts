@@ -15,7 +15,8 @@ class CreateEmploymentController {
       workmodality,
       city,
       region,
-      questionAboutJob,
+      questionaboutjob,
+      ourparticipants,
     } = request.body;
 
     const userid = request.user.id;
@@ -33,7 +34,8 @@ class CreateEmploymentController {
       city,
       region,
       idgoogle: userid,
-      questionAboutJob,
+      questionaboutjob,
+      ourparticipants,
     });
 
     return response.json(employmnet);

@@ -11,7 +11,8 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   workmodality: String,
   city: String,
   region: String,
-  questionAboutJob: [{ type: String }],
+  ourparticipants: [{ type: String }],
+  questionaboutjob: [{ type: String }],
 });
 
 const Employment = mongoose.model("employmenties", EmploymentSchema);

@@ -33,7 +33,7 @@ export async function googleAuthentication(
     if (e.code === "auth/id-token-expired") {
       throw new AppError("tokenexpired", 401);
     } else {
-      throw new AppError("tokenexpired", 401);
+      throw new AppError("Authentication error.", 401);
     }
   }
 }
