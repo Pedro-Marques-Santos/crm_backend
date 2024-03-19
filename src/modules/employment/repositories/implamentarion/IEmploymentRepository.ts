@@ -14,6 +14,11 @@ interface IEmploymentRepository {
     ourparticipants,
     questionaboutjob,
   }: IEmployment): Promise<IEmployment>;
+  addJobParticipants(
+    employment: IEmployment,
+    iduser: string,
+  ): Promise<IEmployment | null>;
+  findById(idemployment: string): Promise<IEmployment | null>;
 }
 
 export { IEmploymentRepository };

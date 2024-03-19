@@ -6,6 +6,7 @@ interface IUser {
   date: Date;
   registeredjobs: string[];
   isRecruiter: boolean;
+  _id?: string;
 }
 
 export { IUser };
