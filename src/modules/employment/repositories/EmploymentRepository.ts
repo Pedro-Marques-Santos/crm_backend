@@ -12,8 +12,14 @@ class EmploymentRepository implements IEmploymentRepository {
   async addJobParticipants(
     employment: IEmployment,
     iduser: string,
+    questions: string[],
   ): Promise<IEmployment | null> {
-    employment.ourparticipants.push(iduser);
+    const neweparticipant = {
+      id: iduser,
+      questions: questions,
+    };
+
+    employment.ourparticipants.push(neweparticipant);
 
     const modifyCompany = await Employment.findOneAndUpdate(
       { _id: employment._id?.toString() },

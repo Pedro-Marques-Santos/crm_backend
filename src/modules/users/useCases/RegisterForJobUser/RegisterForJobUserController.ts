@@ -5,7 +5,7 @@ import { RegisterForJobUserUseCase } from "./RegisterForJobUserUseCase";
 
 class RegisterForJobUserController {
   async handle(request: Request, response: Response) {
-    const { idemployment } = request.body;
+    const { idemployment, questions } = request.body;
 
     const idgoogleuser = request.user.id;
 
@@ -16,6 +16,7 @@ class RegisterForJobUserController {
     const modifyUser = await registerForJobUserUseCase.execute(
       idgoogleuser,
       idemployment,
+      questions,
     );
 
     return response.json(modifyUser);

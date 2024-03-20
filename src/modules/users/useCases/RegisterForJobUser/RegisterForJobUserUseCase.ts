@@ -3,6 +3,7 @@ import { IUserRepository } from "../../repositories/implemantation/IUserReposito
 import { IUser } from "../../interfaces";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import { IEmploymentRepository } from "../../../employment/repositories/implamentarion/IEmploymentRepository";
+import { IOurParticipants } from "../../../employment/interfaces";
 
 @injectable()
 class RegisterForJobUserUseCase {
@@ -13,7 +14,11 @@ class RegisterForJobUserUseCase {
     private employmentRepository: IEmploymentRepository,
   ) {}
 
-  async execute(idgoogleuser: string, idemployment: string): Promise<IUser> {
+  async execute(
+    idgoogleuser: string,
+    idemployment: string,
+    questions: string[],
+  ): Promise<IUser> {
     const user = await this.userRepository.findByIdGoogle(idgoogleuser);
     const employment = await this.employmentRepository.findById(idemployment);
 
@@ -27,8 +32,13 @@ class RegisterForJobUserUseCase {
 
     const userexist = user.registeredjobs.includes(idemployment);
 
-    const userexistinemployment = employment.ourparticipants.includes(
-      employment._id.toString(),
+    // const userexistinemployment = employment.ourparticipants.questions.includes(
+    //   employment._id.toString(),
+    // );
+
+    const userexistinemployment = employment.ourparticipants.find(
+      (participant: IOurParticipants) =>
+        participant.id === employment._id?.toString(),
     );
 
     if (userexist || userexistinemployment) {
@@ -43,6 +53,7 @@ class RegisterForJobUserUseCase {
     const modifyEmployment = await this.employmentRepository.addJobParticipants(
       employment,
       user._id.toString(),
+      questions,
     );
 
     if (!modifyUser || !modifyEmployment) {

@@ -11,7 +11,7 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   workmodality: String,
   city: String,
   region: String,
-  ourparticipants: [{ type: String }],
+  ourparticipants: [{ _id: false, id: String, questions: [{ type: String }] }],
   questionaboutjob: [{ type: String }],
 });
 

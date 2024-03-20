@@ -8,7 +8,7 @@ interface IEmployment {
   workmodality: string;
   city: string;
   region: string;
-  ourparticipants: string[];
+  ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
   _id?: string;
 }
@@ -24,8 +24,13 @@ interface IEmploymentUseCase {
   city: string;
   region: string;
   idgoogle: string;
-  ourparticipants: string[];
+  ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
 }
 
-export { IEmployment, IEmploymentUseCase };
+interface IOurParticipants {
+  id: string;
+  questions: string[];
+}
+
+export { IEmployment, IEmploymentUseCase, IOurParticipants };
