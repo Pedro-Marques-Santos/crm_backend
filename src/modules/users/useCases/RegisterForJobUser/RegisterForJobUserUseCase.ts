@@ -30,11 +30,17 @@ class RegisterForJobUserUseCase {
       throw new AppError("Vaga de emprego não existe!", 400);
     }
 
-    const userexist = user.registeredjobs.includes(idemployment);
+    if (
+      employment.questionaboutjob &&
+      questions.length !== employment.questionaboutjob.length
+    ) {
+      throw new AppError(
+        "Você deve responder todas as perguntas do Recrutador!",
+        400,
+      );
+    }
 
-    // const userexistinemployment = employment.ourparticipants.questions.includes(
-    //   employment._id.toString(),
-    // );
+    const userexist = user.registeredjobs.includes(idemployment);
 
     const userexistinemployment = employment.ourparticipants.find(
       (participant: IOurParticipants) =>
