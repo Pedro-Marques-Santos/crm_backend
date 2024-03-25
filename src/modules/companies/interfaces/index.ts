@@ -4,6 +4,7 @@ interface ICompany {
   lastname: string;
   createdjobs: string[];
   isRecruiter: boolean;
+  _id?: string;
 }
 
 export { ICompany };

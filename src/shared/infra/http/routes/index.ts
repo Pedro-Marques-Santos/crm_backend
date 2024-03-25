@@ -5,6 +5,7 @@ import { createCompanyRoute } from "./createCompanyRoute";
 import { createEmploymentRoute } from "./createEmploymentRoute";
 import { registerForJobUserRoute } from "./registerForJobUser.route";
 import { listJobsRegisteredRoute } from "./listJobsRegisteredRoute";
+import { listCreatedJobsRoute } from "./listCreatedJobsUseCase";
 const routes = Router();
 
 routes.use("/googleAuthentication", authenticationRoute);
@@ -13,5 +14,6 @@ routes.use("/createCompany", createCompanyRoute);
 routes.use("/createEmployment", createEmploymentRoute);
 routes.use("/registerforjobuser", registerForJobUserRoute);
 routes.use("/listJobsRegistereduser", listJobsRegisteredRoute);
+routes.use("/listJobsCreatedcompany", listCreatedJobsRoute);
 
 export { routes };
