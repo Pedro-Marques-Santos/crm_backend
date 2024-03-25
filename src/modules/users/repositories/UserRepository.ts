@@ -1,8 +1,27 @@
+import { IEmployment } from "../../employment/interfaces";
+import { Employment } from "../../employment/model";
 import { IUser } from "../interfaces";
 import { User } from "../model";
 import { IUserRepository } from "./implemantation/IUserRepository";
 
 class UserRepository implements IUserRepository {
+  async listJobRegistered(user: IUser): Promise<IEmployment[] | null> {
+    const listjobsregisteredInPromise = user.registeredjobs.map(
+      async (idemployment) => {
+        const employment = await Employment.findById(idemployment);
+        return employment;
+      },
+    );
+
+    const listjobsregistered = await Promise.all(listjobsregisteredInPromise);
+
+    const filteredListJobsRegistered = listjobsregistered.filter(
+      (employment) => employment !== null,
+    ) as IEmployment[];
+
+    return filteredListJobsRegistered;
+  }
+
   async addJobRegister(
     user: IUser,
     idemployment: string,
