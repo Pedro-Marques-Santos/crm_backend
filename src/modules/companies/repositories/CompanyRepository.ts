@@ -5,21 +5,18 @@ import { Company } from "../model";
 import { ICompanyRepository } from "./implmantation/ICompanyRepository";
 
 class CompanyRepository implements ICompanyRepository {
-  async listJobsCreated(company: ICompany): Promise<IEmployment[] | null> {
-    const listjobsCreatedInPromise = company.createdjobs.map(
-      async (idemployment) => {
-        const employment = await Employment.findById(idemployment);
-        return employment;
+  async listJobsCreated(company: ICompany): Promise<IEmployment[][] | []> {
+    const listJobsCreatedInPromise = (await Employment.find({
+      _id: { $in: company.createdjobs },
+    })) as IEmployment[];
+
+    const listJobsCreated = listJobsCreatedInPromise.map(
+      (employment: IEmployment) => {
+        return [employment];
       },
     );
 
-    const listjobscreated = await Promise.all(listjobsCreatedInPromise);
-
-    const filteredListjobsCreated = listjobscreated.filter(
-      (employment) => employment !== null,
-    ) as IEmployment[];
-
-    return filteredListjobsCreated;
+    return listJobsCreated ? listJobsCreated : [];
   }
 
   async addJobOpportunity(
