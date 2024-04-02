@@ -1,3 +1,5 @@
+import { IUser } from "../../users/interfaces";
+
 interface IEmployment {
   name: string;
   title: string;
@@ -33,4 +35,9 @@ interface IOurParticipants {
   questions: string[];
 }
 
-export { IEmployment, IEmploymentUseCase, IOurParticipants };
+interface IUserParticipant {
+  user: IUser;
+  questions: string[];
+}
+
+export { IEmployment, IEmploymentUseCase, IOurParticipants, IUserParticipant };

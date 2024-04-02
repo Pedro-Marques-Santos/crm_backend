@@ -1,8 +1,29 @@
-import { IEmployment } from "../interfaces";
+import { User } from "../../users/model";
+import { IEmployment, IUserParticipant } from "../interfaces";
 import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  async listParticipants(
+    employment: IEmployment,
+  ): Promise<IUserParticipant[][] | []> {
+    const listUsersIds = employment.ourparticipants.map(
+      (participant) => participant.id,
+    );
+
+    const listUsers = await User.find({ _id: { $in: listUsersIds } });
+
+    const users = listUsers.map((user) => {
+      const participant = employment.ourparticipants.find(
+        (participant) => participant.id.toString() === user._id.toString(),
+      );
+
+      return [{ user: user, questions: participant?.questions }];
+    }) as IUserParticipant[][];
+
+    return users ? users : [];
+  }
+
   async findById(idemployment: string): Promise<IEmployment | null> {
     const employment = await Employment.findById(idemployment);
 

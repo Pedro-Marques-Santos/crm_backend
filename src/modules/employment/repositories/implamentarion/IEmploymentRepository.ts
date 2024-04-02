@@ -1,6 +1,7 @@
-import { IEmployment } from "../../interfaces";
+import { IEmployment, IUserParticipant } from "../../interfaces";
 
 interface IEmploymentRepository {
+  listParticipants(employment: IEmployment): Promise<IUserParticipant[][] | []>;
   createEmployment({
     name,
     title,
