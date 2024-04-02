@@ -1,15 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../repositories/implemantation/IUserRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
-import { IEmploymentRepository } from "../../../employment/repositories/implamentarion/IEmploymentRepository";
 
 @injectable()
 class ListJobRegisteredUseCase {
   constructor(
     @inject("UserRepository")
     private userRepository: IUserRepository,
-    @inject("EmploymentRepository")
-    private employmentRepository: IEmploymentRepository,
   ) {}
 
   async execute(userid: string) {

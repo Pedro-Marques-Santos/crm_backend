@@ -2,7 +2,7 @@ import { IEmployment } from "../../../employment/interfaces";
 import { IUser } from "../../interfaces";
 
 interface IUserRepository {
-  listJobRegistered(user: IUser): Promise<IEmployment[] | null>;
+  listJobRegistered(user: IUser): Promise<IEmployment[][] | null>;
   addJobRegister(user: IUser, idemployment: string): Promise<IUser | null>;
   createUser({
     name,
