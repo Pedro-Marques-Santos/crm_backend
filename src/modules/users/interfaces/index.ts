@@ -7,6 +7,7 @@ interface IUser {
   registeredjobs: string[];
   isRecruiter: boolean;
   _id?: string;
+  imgprofile?: string;
 }
 
 export { IUser };

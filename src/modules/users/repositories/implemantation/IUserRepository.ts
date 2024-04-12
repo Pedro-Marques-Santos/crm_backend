@@ -12,6 +12,7 @@ interface IUserRepository {
     date,
     registeredjobs,
     isRecruiter,
+    imgprofile,
   }: IUser): Promise<IUser>;
   findByIdGoogle(id: string): Promise<IUser | null>;
 }

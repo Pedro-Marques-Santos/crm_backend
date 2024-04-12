@@ -5,22 +5,17 @@ import express from "express";
 
 import "../../containers/index";
 
-import admin from "firebase-admin";
-import { connectToDatabase } from "../../services";
+import { connectToDatabase } from "../../services/connectMongoDB";
 import { routes } from "./routes";
 import { AppError } from "../../errors/AppErrors";
 
-var serviceAccount = require("../../../../firebase.json");
+import "../../services/connectFirebaseSDK";
 
 connectToDatabase();
 
 const app = express();
 
 app.use(express.json());
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
 
 app.use(routes);
 

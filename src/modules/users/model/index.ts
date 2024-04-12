@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   date: { type: Date, required: true },
   registeredjobs: [{ type: String }],
   isRecruiter: { type: Boolean },
+  imgprofile: { type: String },
 });
 
 const User = mongoose.model("users", UserSchema);

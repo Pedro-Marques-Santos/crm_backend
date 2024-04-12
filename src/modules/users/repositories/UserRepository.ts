@@ -45,6 +45,7 @@ class UserRepository implements IUserRepository {
     date,
     registeredjobs,
     isRecruiter,
+    imgprofile,
   }: IUser): Promise<IUser> {
     const user = new User({
       name: name,
@@ -54,6 +55,7 @@ class UserRepository implements IUserRepository {
       date: date,
       registeredjobs: registeredjobs,
       isRecruiter: isRecruiter,
+      imgprofile: imgprofile,
     });
 
     const userResult = await user.save();
