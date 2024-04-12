@@ -2,7 +2,7 @@ import { IEmployment } from "../../employment/interfaces";
 import { Employment } from "../../employment/model";
 import { ICompany } from "../interfaces";
 import { Company } from "../model";
-import { ICompanyRepository } from "./implmantation/ICompanyRepository";
+import { ICompanyRepository } from "./implemantation/ICompanyRepository";
 
 class CompanyRepository implements ICompanyRepository {
   async listJobsCreated(company: ICompany): Promise<IEmployment[][] | []> {
@@ -39,6 +39,7 @@ class CompanyRepository implements ICompanyRepository {
     createdjobs,
     idgoogle,
     isRecruiter,
+    imgprofile,
   }: ICompany): Promise<ICompany> {
     const company = new Company({
       name: name,
@@ -46,6 +47,7 @@ class CompanyRepository implements ICompanyRepository {
       lastname: lastname,
       createdjobs: createdjobs,
       isRecruiter: isRecruiter,
+      imgprofile: imgprofile,
     });
 
     const companyResult = await company.save();

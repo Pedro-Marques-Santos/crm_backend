@@ -7,6 +7,7 @@ const CompanySchema = new mongoose.Schema<ICompany>({
   lastname: String,
   createdjobs: [{ type: String }],
   isRecruiter: { type: Boolean },
+  imgprofile: String,
 });
 
 const Company = mongoose.model("companies", CompanySchema);

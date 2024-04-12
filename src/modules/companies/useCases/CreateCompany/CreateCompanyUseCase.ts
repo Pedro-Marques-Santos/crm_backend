@@ -3,6 +3,7 @@ import { ICompanyRepository } from "../../repositories/implmantation/ICompanyRep
 import { ICompany } from "../../interfaces";
 import { IUserRepository } from "../../../users/repositories/implemantation/IUserRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
+import { uploadImageFirebaseStorage } from "../../../../shared/infra/http/middlewares/firebaseStorage";
 
 @injectable()
 class CreateCompanyUseCase {
@@ -13,13 +14,10 @@ class CreateCompanyUseCase {
     private userRepository: IUserRepository,
   ) {}
 
-  async execute({
-    name,
-    idgoogle,
-    lastname,
-    createdjobs,
-    isRecruiter,
-  }: ICompany): Promise<ICompany> {
+  async execute(
+    { name, idgoogle, lastname, createdjobs, isRecruiter }: ICompany,
+    file: Express.Multer.File,
+  ): Promise<ICompany> {
     const verifyCompany = await this.companyRepository.findByIdGoogle(idgoogle);
     const verifyUser = await this.userRepository.findByIdGoogle(idgoogle);
 
@@ -27,12 +25,15 @@ class CreateCompanyUseCase {
       throw new AppError("Email already registered", 409);
     }
 
+    const imgprofile = await uploadImageFirebaseStorage(file);
+
     const company = await this.companyRepository.createCompany({
       name,
       idgoogle,
       lastname,
       createdjobs,
       isRecruiter,
+      imgprofile,
     });
 
     return company;

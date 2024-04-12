@@ -10,6 +10,7 @@ interface ICompanyRepository {
     idgoogle,
     createdjobs,
     isRecruiter,
+    imgprofile,
   }: ICompany): Promise<ICompany>;
   findByIdGoogle(id: string): Promise<ICompany | null>;
 }
