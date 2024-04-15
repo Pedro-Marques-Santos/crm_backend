@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IEmploymentRepository } from "../../repositories/implamentarion/IEmploymentRepository";
 import { IEmployment, IEmploymentUseCase } from "../../interfaces";
-import { ICompanyRepository } from "../../../companies/repositories/implmantation/ICompanyRepository";
+import { ICompanyRepository } from "../../../companies/repositories/implemantation/ICompanyRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
 
 @injectable()

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { IEmploymentRepository } from "../../repositories/implamentarion/IEmploymentRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
-import { ICompanyRepository } from "../../../companies/repositories/implmantation/ICompanyRepository";
 import { IUserParticipant } from "../../interfaces";
+import { ICompanyRepository } from "../../../companies/repositories/implemantation/ICompanyRepository";
 
 @injectable()
 class ListParticipantsUseCases {

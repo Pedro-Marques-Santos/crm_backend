@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { ICompanyRepository } from "../../repositories/implmantation/ICompanyRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
+import { ICompanyRepository } from "../../repositories/implemantation/ICompanyRepository";
 
 @injectable()
 class ListCreatedJobsUseCase {

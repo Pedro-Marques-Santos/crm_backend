@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../repositories/implemantation/IUserRepository";
 import { IUser } from "../../interfaces";
-import { ICompanyRepository } from "../../../companies/repositories/implmantation/ICompanyRepository";
+import { ICompanyRepository } from "../../../companies/repositories/implemantation/ICompanyRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import { uploadImageFirebaseStorage } from "../../../../shared/infra/http/middlewares/firebaseStorage";
 

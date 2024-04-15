@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ICompanyRepository } from "../../repositories/implmantation/ICompanyRepository";
+import { ICompanyRepository } from "../../repositories/implemantation/ICompanyRepository";
 import { ICompany } from "../../interfaces";
 import { IUserRepository } from "../../../users/repositories/implemantation/IUserRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
