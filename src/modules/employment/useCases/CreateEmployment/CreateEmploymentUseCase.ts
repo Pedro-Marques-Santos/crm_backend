@@ -52,6 +52,7 @@ class CreateEmploymentUseCase {
       region,
       questionaboutjob,
       ourparticipants,
+      companyId: company._id,
     });
 
     if (!emploment._id) {

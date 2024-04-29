@@ -13,6 +13,11 @@ interface IEmployment {
   ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
   _id?: string;
+  createdAt?: Date;
+  dataExpiration?: Date;
+  dataDelete?: Date;
+  dataExpirationActivity?: boolean;
+  companyId?: string;
 }
 
 interface IEmploymentUseCase {

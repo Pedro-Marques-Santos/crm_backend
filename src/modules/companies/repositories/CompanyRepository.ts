@@ -5,6 +5,53 @@ import { Company } from "../model";
 import { ICompanyRepository } from "./implemantation/ICompanyRepository";
 
 class CompanyRepository implements ICompanyRepository {
+  async saveUpdatedCompanies(updatedCompanies: ICompany[]): Promise<void> {
+    await Promise.all(
+      updatedCompanies.map(async (company) => {
+        await Company.findByIdAndUpdate(company._id, company);
+      }),
+    );
+  }
+
+  filterUpdatedCompanies(
+    companies: ICompany[],
+    listIdsEmploymentMustDeleted: string[],
+  ): ICompany[] {
+    const updatedCompanies = companies.map((company) => {
+      const updatedJobs = company.createdjobs.filter(
+        (job) => !listIdsEmploymentMustDeleted.includes(job),
+      );
+      company.createdjobs = updatedJobs;
+      return company;
+    });
+
+    return updatedCompanies;
+  }
+
+  async companiesMustBeEdited(
+    listIdsCompanyMustDeletedInArrayEmplyoment: (string | undefined)[],
+  ): Promise<ICompany[]> {
+    const companies = await Company.find({
+      _id: { $in: listIdsCompanyMustDeletedInArrayEmplyoment },
+    });
+
+    return companies;
+  }
+
+  filterListIdsCompanyMustDeletedInArrayEmplyoment(
+    employmentsMustDeleted: IEmployment[],
+  ): string[] {
+    const listIdsCompanyMustDeletedInArrayEmplyoment = employmentsMustDeleted
+      .map((employment) => {
+        return employment.companyId;
+      })
+      .filter((employmentId) => employmentId !== undefined) as string[];
+
+    const listUsers = [...new Set(listIdsCompanyMustDeletedInArrayEmplyoment)];
+
+    return listUsers;
+  }
+
   async listJobsCreated(company: ICompany): Promise<IEmployment[][] | []> {
     const listJobsCreatedInPromise = (await Employment.find({
       _id: { $in: company.createdjobs },

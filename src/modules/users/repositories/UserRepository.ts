@@ -5,6 +5,56 @@ import { User } from "../model";
 import { IUserRepository } from "./implemantation/IUserRepository";
 
 class UserRepository implements IUserRepository {
+  async saveUpdatedUsers(updatedUsers: IUser[]): Promise<void> {
+    await Promise.all(
+      updatedUsers.map(async (user) => {
+        await User.findByIdAndUpdate(user._id, user);
+      }),
+    );
+  }
+
+  filterUpdatedUsers(
+    users: IUser[],
+    listIdsEmploymentMustDeleted: string[],
+  ): IUser[] {
+    const updatedUsers = users.map((user) => {
+      const updatedJobs = user.registeredjobs.filter(
+        (job) => !listIdsEmploymentMustDeleted.includes(job),
+      );
+      user.registeredjobs = updatedJobs;
+      return user;
+    });
+
+    return updatedUsers;
+  }
+
+  async listAllUsersThatIdEmploymentMustDeleted(
+    employmentsMustDeleted: IEmployment[],
+  ): Promise<string[]> {
+    const listAllUsersThatIdEmploymentMustDeleted =
+      employmentsMustDeleted.flatMap((employment) => {
+        return employment.ourparticipants.map((element) => {
+          return element.id;
+        });
+      });
+
+    const listUsersThatIdEmploymentMustDeleted = [
+      ...new Set(listAllUsersThatIdEmploymentMustDeleted),
+    ];
+
+    return listUsersThatIdEmploymentMustDeleted;
+  }
+
+  async findByUsersIds(
+    listUsersThatIdEmploymentMustDeleted: string[],
+  ): Promise<IUser[]> {
+    const users = await User.find({
+      _id: { $in: listUsersThatIdEmploymentMustDeleted },
+    });
+
+    return users;
+  }
+
   async listJobRegistered(user: IUser): Promise<IEmployment[][] | null> {
     const listJobsCreatedInPromise = (await Employment.find({
       _id: { $in: user.registeredjobs },

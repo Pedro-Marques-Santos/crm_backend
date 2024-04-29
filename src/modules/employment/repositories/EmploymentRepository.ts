@@ -4,6 +4,25 @@ import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  filterListIdsMustDeletedDate(
+    employmentsMustDeleted: IEmployment[],
+  ): string[] | null {
+    const listIdsEmploymentMustDeleted = employmentsMustDeleted
+      .map((employment) => {
+        return employment._id?.toString();
+      })
+      .filter((id) => id !== undefined) as string[];
+
+    return listIdsEmploymentMustDeleted ? listIdsEmploymentMustDeleted : null;
+  }
+
+  async employmentsMustDeletedDateCause(): Promise<IEmployment[] | null> {
+    const employmentsMustDeleted = await Employment.find({
+      dataDelete: { $lte: new Date() },
+    });
+    return employmentsMustDeleted ? employmentsMustDeleted : null;
+  }
+
   async listParticipants(
     employment: IEmployment,
   ): Promise<IUserParticipant[][] | []> {
@@ -62,6 +81,7 @@ class EmploymentRepository implements IEmploymentRepository {
     region,
     questionaboutjob,
     ourparticipants,
+    companyId,
   }: IEmployment): Promise<IEmployment> {
     const employment = new Employment({
       name,
@@ -75,6 +95,8 @@ class EmploymentRepository implements IEmploymentRepository {
       region,
       questionaboutjob,
       ourparticipants,
+      dataExpirationActivity: false,
+      companyId,
     });
 
     const employmentResult = await employment.save();

@@ -15,6 +15,17 @@ interface IUserRepository {
     imgprofile,
   }: IUser): Promise<IUser>;
   findByIdGoogle(id: string): Promise<IUser | null>;
+  listAllUsersThatIdEmploymentMustDeleted(
+    employmentsMustDeleted: IEmployment[],
+  ): Promise<string[]>;
+  findByUsersIds(
+    listUsersThatIdEmploymentMustDeleted: string[],
+  ): Promise<IUser[]>;
+  filterUpdatedUsers(
+    users: IUser[],
+    listIdsEmploymentMustDeleted: string[],
+  ): IUser[];
+  saveUpdatedUsers(updatedUsers: IUser[]): Promise<void>;
 }
 
 export { IUserRepository };

@@ -13,6 +13,17 @@ interface ICompanyRepository {
     imgprofile,
   }: ICompany): Promise<ICompany>;
   findByIdGoogle(id: string): Promise<ICompany | null>;
+  filterListIdsCompanyMustDeletedInArrayEmplyoment(
+    employmentsMustDeleted: IEmployment[],
+  ): string[];
+  companiesMustBeEdited(
+    listIdsCompanyMustDeletedInArrayEmplyoment: (string | undefined)[],
+  ): Promise<ICompany[]>;
+  filterUpdatedCompanies(
+    companies: ICompany[],
+    listIdsEmploymentMustDeleted: string[],
+  ): ICompany[];
+  saveUpdatedCompanies(updatedCompanies: ICompany[]): Promise<void>;
 }
 
 export { ICompanyRepository };

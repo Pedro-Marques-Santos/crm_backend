@@ -1,6 +1,10 @@
 import { IEmployment, IUserParticipant } from "../../interfaces";
 
 interface IEmploymentRepository {
+  filterListIdsMustDeletedDate(
+    employmentsMustDeleted: IEmployment[],
+  ): string[] | null;
+  employmentsMustDeletedDateCause(): Promise<IEmployment[] | null>;
   listParticipants(employment: IEmployment): Promise<IUserParticipant[][] | []>;
   createEmployment({
     name,
@@ -14,6 +18,7 @@ interface IEmploymentRepository {
     region,
     ourparticipants,
     questionaboutjob,
+    companyId,
   }: IEmployment): Promise<IEmployment>;
   addJobParticipants(
     employment: IEmployment,
