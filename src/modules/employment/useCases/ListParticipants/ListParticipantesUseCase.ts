@@ -21,18 +21,21 @@ class ListParticipantsUseCases {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
 
     if (!company) {
-      throw new AppError("Company não existe!", 400);
+      throw new AppError("Company does not exist!", 404);
     }
 
     if (!employment) {
-      throw new AppError("Vaga de emprego não econtrando no sistema!", 400);
+      throw new AppError("Job vacancy not found in the system!", 404);
     }
 
     const listParticipants =
       await this.employmentRepository.listParticipants(employment);
 
     if (!listParticipants) {
-      throw new AppError("Erros ao buscar usuário registrados na vaga!", 400);
+      throw new AppError(
+        "Errors when searching for users registered in the vacancy!",
+        404,
+      );
     }
 
     return listParticipants;

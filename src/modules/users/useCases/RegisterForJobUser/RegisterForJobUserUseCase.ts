@@ -23,11 +23,11 @@ class RegisterForJobUserUseCase {
     const employment = await this.employmentRepository.findById(idemployment);
 
     if (!user || !user._id) {
-      throw new AppError("user não existe!", 400);
+      throw new AppError("User does not exist!", 400);
     }
 
     if (!employment || !employment._id) {
-      throw new AppError("Vaga de emprego não existe!", 400);
+      throw new AppError("Job vacancy does not exist!", 400);
     }
 
     if (
@@ -35,8 +35,8 @@ class RegisterForJobUserUseCase {
       questions.length !== employment.questionaboutjob.length
     ) {
       throw new AppError(
-        "Você deve responder todas as perguntas do Recrutador!",
-        400,
+        "You must answer all of the Recruiter's questions!",
+        422,
       );
     }
 
@@ -48,7 +48,7 @@ class RegisterForJobUserUseCase {
     );
 
     if (userexist || userexistinemployment) {
-      throw new AppError("usuário já está registrado nessa vaga!", 400);
+      throw new AppError("User is already registered for this vacancy!", 400);
     }
 
     const modifyUser = await this.userRepository.addJobRegister(
@@ -63,7 +63,10 @@ class RegisterForJobUserUseCase {
     );
 
     if (!modifyUser || !modifyEmployment) {
-      throw new AppError("Erro ao registrar em novo processo seletivo!", 400);
+      throw new AppError(
+        "Error when registering in new selection process!",
+        400,
+      );
     }
 
     return modifyUser;

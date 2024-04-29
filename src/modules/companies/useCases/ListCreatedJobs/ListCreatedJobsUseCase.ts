@@ -13,22 +13,22 @@ class ListCreatedJobsUseCase {
     const company = await this.companyRepository.findByIdGoogle(idgoogleuser);
 
     if (!company) {
-      throw new AppError("Company não existe!", 400);
+      throw new AppError("Company does not exist!", 404);
     }
 
     if (company.createdjobs.length === 0) {
-      throw new AppError("Você não criou nenhuma vaga de emprego!", 400);
+      throw new AppError("You have not created any job openings!", 404);
     }
 
     if (company.createdjobs.length < 0) {
-      throw new AppError("Error ao buscar vagas!", 400);
+      throw new AppError("Error when searching for vacancies!", 404);
     }
 
     const listjobscreated =
       await this.companyRepository.listJobsCreated(company);
 
     if (!listjobscreated) {
-      throw new AppError("Error ao buscar vagas criadas!", 400);
+      throw new AppError("Error when searching for created vacancies!", 404);
     }
 
     return listjobscreated;
