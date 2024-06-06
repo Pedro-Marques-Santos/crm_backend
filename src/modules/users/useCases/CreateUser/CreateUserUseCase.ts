@@ -18,7 +18,9 @@ class CreateUserUseCase {
     {
       name,
       idgoogle,
-      lastname,
+      linkedinURL,
+      email,
+      workingGroup,
       description,
       date,
       registeredjobs,
@@ -33,12 +35,23 @@ class CreateUserUseCase {
       throw new AppError("email already registered", 409);
     }
 
+    console.log(workingGroup);
+
+    if (workingGroup.length !== 3) {
+      throw new AppError(
+        "belonging to the working group, only 3 groups can be selected!",
+        404,
+      );
+    }
+
     const imgprofile = await uploadImageFirebaseStorage(file);
 
     const user = await this.userRepository.createUser({
       name,
       idgoogle,
-      lastname,
+      linkedinURL,
+      email,
+      workingGroup,
       description,
       date,
       registeredjobs,

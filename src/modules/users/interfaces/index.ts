@@ -1,8 +1,10 @@
 interface IUser {
   name: string;
   idgoogle: string;
-  lastname: string;
+  linkedinURL: string;
   description: string;
+  email: string;
+  workingGroup: string[];
   date: Date;
   registeredjobs: string[];
   isRecruiter: boolean;

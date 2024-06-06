@@ -89,7 +89,9 @@ class UserRepository implements IUserRepository {
   }
   async createUser({
     name,
-    lastname,
+    linkedinURL,
+    email,
+    workingGroup,
     idgoogle,
     description,
     date,
@@ -100,7 +102,9 @@ class UserRepository implements IUserRepository {
     const user = new User({
       name: name,
       idgoogle: idgoogle,
-      lastname: lastname,
+      linkedinURL: linkedinURL,
+      email: email,
+      workingGroup: workingGroup,
       description: description,
       date: date,
       registeredjobs: registeredjobs,

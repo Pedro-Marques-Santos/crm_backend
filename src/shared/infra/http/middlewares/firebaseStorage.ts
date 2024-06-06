@@ -40,7 +40,7 @@ function verifyImgStorage(file: Express.Multer.File) {
   const fileExtension = "." + file.originalname.split(".").pop();
 
   if (!allowedExtensions.includes(fileExtension)) {
-    throw new AppError("Aceitamos somente imagens jpg ou png", 400);
+    throw new AppError("We only accept jpg or png images!", 400);
   }
 }
 

@@ -7,7 +7,9 @@ interface IUserRepository {
   createUser({
     name,
     idgoogle,
-    lastname,
+    linkedinURL,
+    email,
+    workingGroup,
     description,
     date,
     registeredjobs,

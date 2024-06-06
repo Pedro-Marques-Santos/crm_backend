@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import "reflect-metadata";
+import cors from "cors";
 import express from "express";
 
 import "../../containers/index";
@@ -14,6 +15,14 @@ import "../../services/connectFirebaseSDK";
 connectToDatabase();
 
 const app = express();
+
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

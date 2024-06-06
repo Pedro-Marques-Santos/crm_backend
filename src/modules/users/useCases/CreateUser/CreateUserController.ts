@@ -7,8 +7,16 @@ import { verifyImgStorage } from "../../../../shared/infra/http/middlewares/fire
 
 class CreateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, lastname, description, date, registeredjobs, isRecruiter } =
-      request.body;
+    const {
+      name,
+      linkedinURL,
+      description,
+      date,
+      registeredjobs,
+      isRecruiter,
+      email,
+      workingGroup,
+    } = request.body;
 
     const file = request.file;
 
@@ -26,7 +34,9 @@ class CreateUserController {
       {
         name,
         idgoogle,
-        lastname,
+        linkedinURL,
+        email,
+        workingGroup,
         description,
         date,
         registeredjobs,
