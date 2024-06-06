@@ -82,7 +82,6 @@ class CompanyRepository implements ICompanyRepository {
 
   async createCompany({
     name,
-    lastname,
     createdjobs,
     idgoogle,
     isRecruiter,
@@ -91,7 +90,6 @@ class CompanyRepository implements ICompanyRepository {
     const company = new Company({
       name: name,
       idgoogle: idgoogle,
-      lastname: lastname,
       createdjobs: createdjobs,
       isRecruiter: isRecruiter,
       imgprofile: imgprofile,
