@@ -86,6 +86,7 @@ class CompanyRepository implements ICompanyRepository {
     idgoogle,
     isRecruiter,
     imgprofile,
+    email,
   }: ICompany): Promise<ICompany> {
     const company = new Company({
       name: name,
@@ -93,6 +94,7 @@ class CompanyRepository implements ICompanyRepository {
       createdjobs: createdjobs,
       isRecruiter: isRecruiter,
       imgprofile: imgprofile,
+      email: email,
     });
 
     const companyResult = await company.save();

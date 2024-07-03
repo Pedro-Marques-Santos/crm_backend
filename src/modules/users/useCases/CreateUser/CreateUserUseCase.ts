@@ -35,8 +35,6 @@ class CreateUserUseCase {
       throw new AppError("email already registered", 409);
     }
 
-    console.log(workingGroup);
-
     if (workingGroup.length !== 3) {
       throw new AppError(
         "belonging to the working group, only 3 groups can be selected!",

@@ -55,8 +55,6 @@ class CreateEmploymentUseCase {
       companyId: company._id,
     });
 
-    console.log(occupationarea);
-
     if (!emploment._id) {
       throw new AppError("Error when trying to create a job vacancy!", 500);
     }

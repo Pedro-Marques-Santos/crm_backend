@@ -15,7 +15,7 @@ class CreateCompanyUseCase {
   ) {}
 
   async execute(
-    { name, idgoogle, createdjobs, isRecruiter }: ICompany,
+    { name, idgoogle, createdjobs, isRecruiter, email }: ICompany,
     file: Express.Multer.File,
   ): Promise<ICompany> {
     const verifyCompany = await this.companyRepository.findByIdGoogle(idgoogle);
@@ -33,6 +33,7 @@ class CreateCompanyUseCase {
       createdjobs,
       isRecruiter,
       imgprofile,
+      email,
     });
 
     return company;
