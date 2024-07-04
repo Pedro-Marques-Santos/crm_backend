@@ -18,6 +18,7 @@ interface IEmployment {
   dataDelete?: Date;
   dataExpirationActivity?: boolean;
   companyId?: string;
+  wage: String[];
 }
 
 interface IEmploymentUseCase {
@@ -33,6 +34,7 @@ interface IEmploymentUseCase {
   idgoogle: string;
   ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
+  wage: String[];
 }
 
 interface IOurParticipants {
