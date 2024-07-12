@@ -8,8 +8,10 @@ import { listJobsRegisteredRoute } from "./listJobsRegisteredRoute";
 import { listCreatedJobsRoute } from "./listCreatedJobsUseCase";
 import { listParticipantsRoute } from "./listParticipantsRoute";
 import { expirationEmploymentRoute } from "./expirationEmploymentRoute";
+import { listAllEmploymentsRoute } from "./listAllEmploymentsRoute";
 const routes = Router();
 
+routes.use("/listAllEmployments", listAllEmploymentsRoute);
 routes.use("/googleAuthentication", authenticationRoute);
 routes.use("/createUser", createUserRoute);
 routes.use("/createCompany", createCompanyRoute);

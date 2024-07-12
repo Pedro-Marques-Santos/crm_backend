@@ -4,7 +4,7 @@ import { IEmployment } from "../interfaces";
 const EmploymentSchema = new mongoose.Schema<IEmployment>({
   name: String,
   title: String,
-  descrition: String,
+  description: String,
   occupationarea: [{ type: String }],
   entrylevel: String,
   typehiring: String,

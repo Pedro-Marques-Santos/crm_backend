@@ -27,6 +27,7 @@ interface IEmploymentRepository {
     questions: string[],
   ): Promise<IEmployment | null>;
   findById(idemployment: string): Promise<IEmployment | null>;
+  listAllEmployment(): Promise<IEmployment[] | null>;
 }
 
 export { IEmploymentRepository };

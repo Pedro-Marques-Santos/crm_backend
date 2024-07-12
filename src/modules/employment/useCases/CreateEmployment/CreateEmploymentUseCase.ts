@@ -16,7 +16,7 @@ class CreateEmploymentUseCase {
   async execute({
     name,
     title,
-    descrition,
+    description,
     occupationarea,
     entrylevel,
     typehiring,
@@ -48,7 +48,7 @@ class CreateEmploymentUseCase {
     const emploment = await this.employmentRepository.createEmployment({
       name,
       title,
-      descrition,
+      description,
       occupationarea,
       entrylevel,
       typehiring,

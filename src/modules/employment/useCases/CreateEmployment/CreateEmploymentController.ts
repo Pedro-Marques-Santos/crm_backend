@@ -8,7 +8,7 @@ class CreateEmploymentController {
     const {
       name,
       title,
-      descrition,
+      description,
       occupationarea,
       entrylevel,
       typehiring,
@@ -27,7 +27,7 @@ class CreateEmploymentController {
     const employmnet = await createEmploymentUseCase.execute({
       name,
       title,
-      descrition,
+      description,
       occupationarea,
       entrylevel,
       typehiring,

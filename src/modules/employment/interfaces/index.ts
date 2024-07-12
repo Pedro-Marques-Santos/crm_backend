@@ -3,7 +3,7 @@ import { IUser } from "../../users/interfaces";
 interface IEmployment {
   name: string;
   title: string;
-  descrition: string;
+  description: string;
   occupationarea: string[];
   entrylevel: string;
   typehiring: string;
@@ -24,7 +24,7 @@ interface IEmployment {
 interface IEmploymentUseCase {
   name: string;
   title: string;
-  descrition: string;
+  description: string;
   occupationarea: string[];
   entrylevel: string;
   typehiring: string;

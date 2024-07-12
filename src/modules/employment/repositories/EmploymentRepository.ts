@@ -4,6 +4,12 @@ import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  async listAllEmployment(): Promise<IEmployment[] | null> {
+    const listAllEmployments = await Employment.find();
+
+    return listAllEmployments ? listAllEmployments : null;
+  }
+
   filterListIdsMustDeletedDate(
     employmentsMustDeleted: IEmployment[],
   ): string[] | null {
@@ -72,7 +78,7 @@ class EmploymentRepository implements IEmploymentRepository {
   async createEmployment({
     name,
     title,
-    descrition,
+    description,
     occupationarea,
     entrylevel,
     typehiring,
@@ -87,7 +93,7 @@ class EmploymentRepository implements IEmploymentRepository {
     const employment = new Employment({
       name,
       title,
-      descrition,
+      description,
       occupationarea,
       entrylevel,
       typehiring,
