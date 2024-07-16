@@ -19,6 +19,7 @@ interface IEmployment {
   dataExpirationActivity?: boolean;
   companyId?: string;
   wage: String[];
+  companyImg: string;
 }
 
 interface IEmploymentUseCase {

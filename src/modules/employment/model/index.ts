@@ -25,6 +25,7 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
     default: () => new Date(Date.now() + 20 * 24 * 60 * 60 * 1000),
   },
   wage: [{ type: String }],
+  companyImg: String,
 });
 
 const Employment = mongoose.model("employmenties", EmploymentSchema);

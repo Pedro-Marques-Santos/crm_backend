@@ -9,7 +9,8 @@ interface IEmploymentRepository {
   createEmployment({
     name,
     title,
-    descrition,
+    description,
+    companyImg,
     occupationarea,
     entrylevel,
     typehiring,

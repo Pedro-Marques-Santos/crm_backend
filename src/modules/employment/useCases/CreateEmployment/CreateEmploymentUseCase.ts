@@ -30,7 +30,7 @@ class CreateEmploymentUseCase {
   }: IEmploymentUseCase): Promise<IEmployment> {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
 
-    if (!company) {
+    if (!company || !company.imgprofile) {
       throw new AppError("Company was not found in the system!", 400);
     }
 
@@ -59,6 +59,7 @@ class CreateEmploymentUseCase {
       ourparticipants,
       companyId: company._id,
       wage,
+      companyImg: company.imgprofile,
     });
 
     if (!emploment._id) {

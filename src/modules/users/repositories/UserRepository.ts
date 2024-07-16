@@ -55,14 +55,14 @@ class UserRepository implements IUserRepository {
     return users;
   }
 
-  async listJobRegistered(user: IUser): Promise<IEmployment[][] | null> {
+  async listJobRegistered(user: IUser): Promise<IEmployment[] | null> {
     const listJobsCreatedInPromise = (await Employment.find({
       _id: { $in: user.registeredjobs },
     })) as IEmployment[];
 
     const listJobsCreated = listJobsCreatedInPromise.map(
       (employment: IEmployment) => {
-        return [employment];
+        return employment;
       },
     );
 
