@@ -18,6 +18,7 @@ class RegisterForJobUserUseCase {
     idgoogleuser: string,
     idemployment: string,
     questions: string[],
+    date: Date,
   ): Promise<IUser> {
     const user = await this.userRepository.findByIdGoogle(idgoogleuser);
     const employment = await this.employmentRepository.findById(idemployment);
@@ -40,7 +41,9 @@ class RegisterForJobUserUseCase {
       );
     }
 
-    const userexist = user.registeredjobs.includes(idemployment);
+    const userexist = user.registeredjobs.some((job) =>
+      job.id.includes(idemployment),
+    );
 
     const userexistinemployment = employment.ourparticipants.find(
       (participant: IOurParticipants) =>
@@ -54,6 +57,7 @@ class RegisterForJobUserUseCase {
     const modifyUser = await this.userRepository.addJobRegister(
       user,
       idemployment,
+      date,
     );
 
     const modifyEmployment = await this.employmentRepository.addJobParticipants(

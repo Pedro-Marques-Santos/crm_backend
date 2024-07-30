@@ -13,7 +13,7 @@ interface IEmployment {
   ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
   _id?: string;
-  createdAt?: Date;
+  createdAt: Date;
   dataExpiration?: Date;
   dataDelete?: Date;
   dataExpirationActivity?: boolean;

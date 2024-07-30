@@ -14,7 +14,7 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   ourparticipants: [{ _id: false, id: String, questions: [{ type: String }] }],
   questionaboutjob: [{ type: String }],
   companyId: String,
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date },
   dataExpiration: {
     type: Date,
     default: () => new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),

@@ -7,7 +7,13 @@ class EmploymentRepository implements IEmploymentRepository {
   async listAllEmployment(): Promise<IEmployment[] | null> {
     const listAllEmployments = await Employment.find();
 
-    return listAllEmployments ? listAllEmployments : null;
+    const sortedEmployments = listAllEmployments.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
+    return sortedEmployments ? sortedEmployments : null;
   }
 
   filterListIdsMustDeletedDate(
@@ -90,6 +96,7 @@ class EmploymentRepository implements IEmploymentRepository {
     companyId,
     wage,
     companyImg,
+    createdAt,
   }: IEmployment): Promise<IEmployment> {
     const employment = new Employment({
       name,
@@ -107,6 +114,7 @@ class EmploymentRepository implements IEmploymentRepository {
       companyId,
       wage,
       companyImg,
+      createdAt,
     });
 
     const employmentResult = await employment.save();

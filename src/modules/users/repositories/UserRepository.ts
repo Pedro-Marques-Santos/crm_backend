@@ -19,7 +19,7 @@ class UserRepository implements IUserRepository {
   ): IUser[] {
     const updatedUsers = users.map((user) => {
       const updatedJobs = user.registeredjobs.filter(
-        (job) => !listIdsEmploymentMustDeleted.includes(job),
+        (job) => !listIdsEmploymentMustDeleted.includes(job.id),
       );
       user.registeredjobs = updatedJobs;
       return user;
@@ -57,14 +57,18 @@ class UserRepository implements IUserRepository {
 
   async listJobRegistered(user: IUser): Promise<IEmployment[] | null> {
     const listJobsCreatedInPromise = (await Employment.find({
-      _id: { $in: user.registeredjobs },
+      _id: { $in: user.registeredjobs.map((job) => job.id) },
     })) as IEmployment[];
 
-    const listJobsCreated = listJobsCreatedInPromise.map(
-      (employment: IEmployment) => {
-        return employment;
-      },
-    );
+    const sortedJobs = listJobsCreatedInPromise.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
+    const listJobsCreated = sortedJobs.map((employment: IEmployment) => {
+      return employment;
+    });
 
     return listJobsCreated ? listJobsCreated : [];
   }
@@ -72,8 +76,14 @@ class UserRepository implements IUserRepository {
   async addJobRegister(
     user: IUser,
     idemployment: string,
+    date: Date,
   ): Promise<IUser | null> {
-    user.registeredjobs.push(idemployment);
+    const registerjob = {
+      id: idemployment,
+      date: date,
+    };
+
+    user.registeredjobs.push(registerjob);
 
     const modifyCompany = await User.findOneAndUpdate(
       { idgoogle: user.idgoogle },

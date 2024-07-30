@@ -6,10 +6,15 @@ interface IUser {
   email: string;
   workingGroup: string[];
   date: Date;
-  registeredjobs: string[];
+  registeredjobs: IRegisteredJobs[];
   isRecruiter: boolean;
   _id?: string;
   imgprofile?: string;
+}
+
+interface IRegisteredJobs {
+  id: string;
+  date: Date;
 }
 
 export { IUser };

@@ -21,6 +21,7 @@ interface IEmploymentRepository {
     questionaboutjob,
     companyId,
     wage,
+    createdAt,
   }: IEmployment): Promise<IEmployment>;
   addJobParticipants(
     employment: IEmployment,

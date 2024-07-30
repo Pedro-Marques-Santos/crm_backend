@@ -13,10 +13,13 @@ class RegisterForJobUserController {
       RegisterForJobUserUseCase,
     );
 
+    const date = new Date();
+
     const modifyUser = await registerForJobUserUseCase.execute(
       idgoogleuser,
       idemployment,
       questions,
+      date,
     );
 
     return response.json(modifyUser);
