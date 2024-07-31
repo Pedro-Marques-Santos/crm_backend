@@ -26,6 +26,7 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   },
   wage: [{ type: String }],
   companyImg: String,
+  steps: [{ _id: false, currentStage: Boolean, stepName: String }],
 });
 
 const Employment = mongoose.model("employmenties", EmploymentSchema);

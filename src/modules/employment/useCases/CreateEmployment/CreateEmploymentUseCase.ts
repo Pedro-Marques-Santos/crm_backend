@@ -27,6 +27,7 @@ class CreateEmploymentUseCase {
     questionaboutjob,
     ourparticipants,
     wage,
+    steps,
   }: IEmploymentUseCase): Promise<IEmployment> {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
     const createdAt: Date = new Date();
@@ -35,11 +36,15 @@ class CreateEmploymentUseCase {
       throw new AppError("Company was not found in the system!", 400);
     }
 
+    if (!steps || steps.length < 2 || steps.length > 5) {
+      throw new AppError("Erro in register Column Steps!", 409);
+    }
+
     if (!wage || wage.length > 2) {
       throw new AppError("Erro in register Column Wage!", 409);
     }
 
-    if (questionaboutjob && questionaboutjob.length > 2) {
+    if (questionaboutjob && questionaboutjob.length > 4) {
       throw new AppError(
         "The user can only ask two questions to the collaborator!",
         409,
@@ -62,6 +67,7 @@ class CreateEmploymentUseCase {
       wage,
       companyImg: company.imgprofile,
       createdAt,
+      steps,
     });
 
     if (!emploment._id) {

@@ -18,6 +18,7 @@ class CreateEmploymentController {
       questionaboutjob,
       ourparticipants,
       wage,
+      steps,
     } = request.body;
 
     const userid = request.user.id;
@@ -38,6 +39,7 @@ class CreateEmploymentController {
       questionaboutjob,
       ourparticipants,
       wage,
+      steps,
     });
 
     return response.json(employmnet);

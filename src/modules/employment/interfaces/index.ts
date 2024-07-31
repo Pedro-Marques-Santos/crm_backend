@@ -20,6 +20,7 @@ interface IEmployment {
   companyId?: string;
   wage: String[];
   companyImg: string;
+  steps: ISteps[];
 }
 
 interface IEmploymentUseCase {
@@ -36,6 +37,12 @@ interface IEmploymentUseCase {
   ourparticipants: IOurParticipants[];
   questionaboutjob?: string[];
   wage: String[];
+  steps: ISteps[];
+}
+
+interface ISteps {
+  currentStage: boolean;
+  stepName: string;
 }
 
 interface IOurParticipants {
