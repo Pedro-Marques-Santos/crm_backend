@@ -52,18 +52,18 @@ class CompanyRepository implements ICompanyRepository {
     return listUsers;
   }
 
-  async listJobsCreated(company: ICompany): Promise<IEmployment[][] | []> {
+  async listJobsCreated(company: ICompany): Promise<IEmployment[] | []> {
     const listJobsCreatedInPromise = (await Employment.find({
       _id: { $in: company.createdjobs },
     })) as IEmployment[];
 
-    const listJobsCreated = listJobsCreatedInPromise.map(
-      (employment: IEmployment) => {
-        return [employment];
-      },
-    );
+    const employmentListBydate = listJobsCreatedInPromise.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
 
-    return listJobsCreated ? listJobsCreated : [];
+    return employmentListBydate ? employmentListBydate : [];
   }
 
   async addJobOpportunity(

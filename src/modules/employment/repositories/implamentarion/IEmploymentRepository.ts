@@ -5,7 +5,7 @@ interface IEmploymentRepository {
     employmentsMustDeleted: IEmployment[],
   ): string[] | null;
   employmentsMustDeletedDateCause(): Promise<IEmployment[] | null>;
-  listParticipants(employment: IEmployment): Promise<IUserParticipant[][] | []>;
+  listParticipants(employment: IEmployment): Promise<IUserParticipant[] | []>;
   createEmployment({
     name,
     title,

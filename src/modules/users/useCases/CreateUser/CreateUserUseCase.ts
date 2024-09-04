@@ -25,6 +25,7 @@ class CreateUserUseCase {
       date,
       registeredjobs,
       isRecruiter,
+      title,
     }: IUser,
     file: Express.Multer.File,
   ): Promise<IUser> {
@@ -35,11 +36,8 @@ class CreateUserUseCase {
       throw new AppError("email already registered", 409);
     }
 
-    if (workingGroup.length !== 3) {
-      throw new AppError(
-        "belonging to the working group, only 3 groups can be selected!",
-        404,
-      );
+    if (workingGroup.length < 3 || workingGroup.length > 10) {
+      throw new AppError("Working group can not more ten or less 3", 404);
     }
 
     const imgprofile = await uploadImageFirebaseStorage(file);
@@ -55,6 +53,7 @@ class CreateUserUseCase {
       registeredjobs,
       isRecruiter,
       imgprofile,
+      title,
     });
 
     return user;

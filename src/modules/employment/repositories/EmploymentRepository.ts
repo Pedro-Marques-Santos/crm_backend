@@ -37,7 +37,7 @@ class EmploymentRepository implements IEmploymentRepository {
 
   async listParticipants(
     employment: IEmployment,
-  ): Promise<IUserParticipant[][] | []> {
+  ): Promise<IUserParticipant[] | []> {
     const listUsersIds = employment.ourparticipants.map(
       (participant) => participant.id,
     );
@@ -49,8 +49,8 @@ class EmploymentRepository implements IEmploymentRepository {
         (participant) => participant.id.toString() === user._id.toString(),
       );
 
-      return [{ user: user, questions: participant?.questions }];
-    }) as IUserParticipant[][];
+      return { user: user, questions: participant?.questions };
+    }) as IUserParticipant[];
 
     return users ? users : [];
   }

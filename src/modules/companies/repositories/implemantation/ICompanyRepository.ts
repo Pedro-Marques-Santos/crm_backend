@@ -2,7 +2,7 @@ import { IEmployment } from "../../../employment/interfaces";
 import { ICompany } from "../../interfaces";
 
 interface ICompanyRepository {
-  listJobsCreated(company: ICompany): Promise<IEmployment[][] | []>;
+  listJobsCreated(company: ICompany): Promise<IEmployment[] | []>;
   addJobOpportunity(company: ICompany, idjob: string): Promise<ICompany | null>;
   createCompany({
     name,

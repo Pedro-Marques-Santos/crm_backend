@@ -19,6 +19,7 @@ interface IUserRepository {
     registeredjobs,
     isRecruiter,
     imgprofile,
+    title,
   }: IUser): Promise<IUser>;
   findByIdGoogle(id: string): Promise<IUser | null>;
   listAllUsersThatIdEmploymentMustDeleted(

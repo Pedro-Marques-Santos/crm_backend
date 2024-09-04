@@ -1,5 +1,6 @@
 interface IUser {
   name: string;
+  title: string;
   idgoogle: string;
   linkedinURL: string;
   description: string;

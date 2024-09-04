@@ -16,6 +16,7 @@ class CreateUserController {
       isRecruiter,
       email,
       workingGroup,
+      title,
     } = request.body;
 
     const file = request.file;
@@ -33,6 +34,7 @@ class CreateUserController {
     const user = await createUserUseCase.execute(
       {
         name,
+        title,
         idgoogle,
         linkedinURL,
         email,

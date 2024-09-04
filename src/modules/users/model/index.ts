@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema<IUser>({
   name: String,
+  title: String,
   idgoogle: { type: String, unique: true, required: true },
   linkedinURL: String,
   email: String,

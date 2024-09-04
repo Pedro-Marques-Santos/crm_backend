@@ -108,6 +108,7 @@ class UserRepository implements IUserRepository {
     registeredjobs,
     isRecruiter,
     imgprofile,
+    title,
   }: IUser): Promise<IUser> {
     const user = new User({
       name: name,
@@ -120,6 +121,7 @@ class UserRepository implements IUserRepository {
       registeredjobs: registeredjobs,
       isRecruiter: isRecruiter,
       imgprofile: imgprofile,
+      title: title,
     });
 
     const userResult = await user.save();

@@ -16,7 +16,7 @@ class ListParticipantsUseCases {
   async execute(
     idgoogle: string,
     idemployment: string,
-  ): Promise<IUserParticipant[][]> {
+  ): Promise<IUserParticipant[]> {
     const employment = await this.employmentRepository.findById(idemployment);
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
 
