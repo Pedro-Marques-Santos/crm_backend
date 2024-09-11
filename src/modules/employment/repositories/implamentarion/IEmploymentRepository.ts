@@ -1,6 +1,34 @@
-import { IEmployment, IUserParticipant } from "../../interfaces";
+import {
+  IEmployment,
+  IOurParticipants,
+  IUserParticipant,
+} from "../../interfaces";
 
 interface IEmploymentRepository {
+  modifyEmploymentWithAllNewSteps(
+    participantsIndexes: number[],
+    employment: IEmployment,
+    participants: IOurParticipants[],
+  ): IEmployment;
+  allparticipant(
+    participantsIndexes: number[],
+    employment: IEmployment,
+  ): IOurParticipants[];
+  allSameStepParticipants(
+    participants: IOurParticipants[],
+    stepOne: number,
+  ): boolean;
+  findIndexOurparticipant(
+    ourparticipants: IOurParticipants[],
+    iduser: string,
+  ): number;
+  findIndexOurparticipants(
+    ourparticipants: IOurParticipants[],
+    idusers: string[],
+  ): number[];
+  upgradeEmploymenToNextStep(
+    employment: IEmployment,
+  ): Promise<IEmployment | null>;
   filterListIdsMustDeletedDate(
     employmentsMustDeleted: IEmployment[],
   ): string[] | null;

@@ -9,6 +9,8 @@ import { listCreatedJobsRoute } from "./listCreatedJobsUseCase";
 import { listParticipantsRoute } from "./listParticipantsRoute";
 import { expirationEmploymentRoute } from "./expirationEmploymentRoute";
 import { listAllEmploymentsRoute } from "./listAllEmploymentsRoute";
+import { nextStepRoute } from "./nextStepRoute";
+import { nextGroupStepRoute } from "./nextGroupStep";
 const routes = Router();
 
 routes.use("/listAllEmployments", listAllEmploymentsRoute);
@@ -21,5 +23,7 @@ routes.use("/listJobsRegistereduser", listJobsRegisteredRoute);
 routes.use("/listJobsCreatedcompany", listCreatedJobsRoute);
 routes.use("/listParticipantsEmployment", listParticipantsRoute);
 routes.use("/expirationEmployment", expirationEmploymentRoute);
+routes.use("/nextStep", nextStepRoute);
+routes.use("/nextGroupStep", nextGroupStepRoute);
 
 export { routes };

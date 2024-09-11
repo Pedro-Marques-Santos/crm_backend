@@ -1,4 +1,4 @@
-import { IEmployment } from "../../../employment/interfaces";
+import { IEmployment, IOurParticipants } from "../../../employment/interfaces";
 import { IUser } from "../../interfaces";
 
 interface IUserRepository {

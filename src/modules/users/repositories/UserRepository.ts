@@ -1,4 +1,4 @@
-import { IEmployment } from "../../employment/interfaces";
+import { IEmployment, IOurParticipants } from "../../employment/interfaces";
 import { Employment } from "../../employment/model";
 import { IUser } from "../interfaces";
 import { User } from "../model";

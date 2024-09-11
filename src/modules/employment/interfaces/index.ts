@@ -41,13 +41,13 @@ interface IEmploymentUseCase {
 }
 
 interface ISteps {
-  currentStage: boolean;
   stepName: string;
 }
 
 interface IOurParticipants {
   id: string;
   questions: string[];
+  step: number;
 }
 
 interface IUserParticipant {

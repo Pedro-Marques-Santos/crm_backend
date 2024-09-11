@@ -1,9 +1,71 @@
 import { User } from "../../users/model";
-import { IEmployment, IUserParticipant } from "../interfaces";
+import { IEmployment, IOurParticipants, IUserParticipant } from "../interfaces";
 import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  modifyEmploymentWithAllNewSteps(
+    participantsIndexes: number[],
+    employment: IEmployment,
+    participants: IOurParticipants[],
+  ): IEmployment {
+    participantsIndexes.map((participantindex) => {
+      employment.ourparticipants[participantindex].step =
+        participants[participantindex].step + 1;
+    });
+
+    return employment;
+  }
+
+  allSameStepParticipants(
+    participants: IOurParticipants[],
+    stepOne: number,
+  ): boolean {
+    const allSameStep = participants.every(
+      (participant) => participant.step === stepOne,
+    );
+
+    return allSameStep;
+  }
+
+  allparticipant(
+    participantsIndexes: number[],
+    employment: IEmployment,
+  ): IOurParticipants[] {
+    const allparticipant = participantsIndexes.map((participantIndex) => {
+      return employment.ourparticipants[participantIndex];
+    });
+
+    return allparticipant;
+  }
+
+  findIndexOurparticipant(
+    ourparticipants: IOurParticipants[],
+    iduser: string,
+  ): number {
+    const participantIndex = ourparticipants.findIndex(
+      (participant) => participant.id === iduser,
+    );
+    return participantIndex;
+  }
+
+  findIndexOurparticipants(
+    ourparticipants: IOurParticipants[],
+    idusers: string[],
+  ): number[] {
+    const participantsIndexes: number[] = [];
+
+    idusers.map((iduser) => {
+      const participantIndex = ourparticipants.findIndex(
+        (participant) => participant.id === iduser,
+      );
+
+      participantsIndexes.push(participantIndex);
+    });
+
+    return participantsIndexes;
+  }
+
   async listAllEmployment(): Promise<IEmployment[] | null> {
     const listAllEmployments = await Employment.find();
 
@@ -61,6 +123,17 @@ class EmploymentRepository implements IEmploymentRepository {
     return employment;
   }
 
+  async upgradeEmploymenToNextStep(
+    employment: IEmployment,
+  ): Promise<IEmployment | null> {
+    const modifyEmploymentUserStep = await Employment.findOneAndUpdate(
+      { _id: employment._id?.toString() },
+      employment,
+    );
+
+    return modifyEmploymentUserStep;
+  }
+
   async addJobParticipants(
     employment: IEmployment,
     iduser: string,
@@ -69,6 +142,7 @@ class EmploymentRepository implements IEmploymentRepository {
     const neweparticipant = {
       id: iduser,
       questions: questions,
+      step: 0,
     };
 
     employment.ourparticipants.push(neweparticipant);

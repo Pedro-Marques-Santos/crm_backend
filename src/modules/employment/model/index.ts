@@ -11,7 +11,9 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   workmodality: String,
   city: String,
   region: String,
-  ourparticipants: [{ _id: false, id: String, questions: [{ type: String }] }],
+  ourparticipants: [
+    { _id: false, id: String, questions: [{ type: String }], step: Number },
+  ],
   questionaboutjob: [{ type: String }],
   companyId: String,
   createdAt: { type: Date },
@@ -26,7 +28,7 @@ const EmploymentSchema = new mongoose.Schema<IEmployment>({
   },
   wage: [{ type: String }],
   companyImg: String,
-  steps: [{ _id: false, currentStage: Boolean, stepName: String }],
+  steps: [{ stepName: String, _id: false }],
 });
 
 const Employment = mongoose.model("employmenties", EmploymentSchema);
