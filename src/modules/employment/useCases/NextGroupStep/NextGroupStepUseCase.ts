@@ -57,7 +57,7 @@ class NextGroupStepUseCase {
       this.employmentRepository.modifyEmploymentWithAllNewSteps(
         participantsIndexes,
         employment,
-        participants,
+        stepOne,
       );
 
     const newEmployment =

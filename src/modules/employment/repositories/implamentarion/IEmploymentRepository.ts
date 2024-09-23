@@ -8,7 +8,7 @@ interface IEmploymentRepository {
   modifyEmploymentWithAllNewSteps(
     participantsIndexes: number[],
     employment: IEmployment,
-    participants: IOurParticipants[],
+    stepOne: number,
   ): IEmployment;
   allparticipant(
     participantsIndexes: number[],

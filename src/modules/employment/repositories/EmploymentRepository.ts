@@ -7,11 +7,10 @@ class EmploymentRepository implements IEmploymentRepository {
   modifyEmploymentWithAllNewSteps(
     participantsIndexes: number[],
     employment: IEmployment,
-    participants: IOurParticipants[],
+    stepOne: number,
   ): IEmployment {
-    participantsIndexes.map((participantindex) => {
-      employment.ourparticipants[participantindex].step =
-        participants[participantindex].step + 1;
+    participantsIndexes.map((participantIndex) => {
+      employment.ourparticipants[participantIndex].step = stepOne + 1;
     });
 
     return employment;
@@ -111,7 +110,11 @@ class EmploymentRepository implements IEmploymentRepository {
         (participant) => participant.id.toString() === user._id.toString(),
       );
 
-      return { user: user, questions: participant?.questions };
+      return {
+        user: user,
+        questions: participant?.questions,
+        step: participant?.step,
+      };
     }) as IUserParticipant[];
 
     return users ? users : [];
