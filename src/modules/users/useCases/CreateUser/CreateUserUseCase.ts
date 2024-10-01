@@ -3,7 +3,13 @@ import { IUserRepository } from "../../repositories/implemantation/IUserReposito
 import { IUser } from "../../interfaces";
 import { ICompanyRepository } from "../../../companies/repositories/implemantation/ICompanyRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
-import { uploadImageFirebaseStorage } from "../../../../shared/infra/http/middlewares/firebaseStorage";
+import {
+  uploadImageFirebaseStorage,
+  uploadPDFtoFirebaseStorage,
+} from "../../../../shared/infra/http/middlewares/firebaseStorage";
+import { compressPDF } from "../../../../shared/external-tools/ghostscript/compressPDF";
+import path from "path";
+import fs from "fs";
 
 @injectable()
 class CreateUserUseCase {
@@ -27,7 +33,8 @@ class CreateUserUseCase {
       isRecruiter,
       title,
     }: IUser,
-    file: Express.Multer.File,
+    imageFile: Express.Multer.File,
+    pdfFile: Express.Multer.File,
   ): Promise<IUser> {
     const verifyUser = await this.userRepository.findByIdGoogle(idgoogle);
     const verifyCompany = await this.companyRepository.findByIdGoogle(idgoogle);
@@ -37,10 +44,37 @@ class CreateUserUseCase {
     }
 
     if (workingGroup.length < 3 || workingGroup.length > 10) {
-      throw new AppError("Working group can not more ten or less 3", 404);
+      throw new AppError(
+        "Working group can not more than ten or less than three",
+        404,
+      );
     }
 
-    const imgprofile = await uploadImageFirebaseStorage(file);
+    const imgprofile = await uploadImageFirebaseStorage(imageFile);
+
+    let compressedBuffer: Buffer;
+
+    try {
+      // Comprimir o PDF antes do upload
+      const outputFilePath = path.join(__dirname, "compressed.pdf");
+      await compressPDF(pdfFile.buffer, outputFilePath);
+      compressedBuffer = fs.readFileSync(outputFilePath);
+
+      // Remover o arquivo temporário comprimido após o uso
+      fs.unlinkSync(outputFilePath);
+    } catch (error) {
+      // Caso ocorra algum problema na compressão, usar o PDF original
+      console.error(
+        "Falha ao comprimir o PDF, enviando o arquivo original.",
+        error,
+      );
+      compressedBuffer = pdfFile.buffer;
+    }
+
+    const curriculumfile = await uploadPDFtoFirebaseStorage({
+      ...pdfFile,
+      buffer: compressedBuffer,
+    });
 
     const user = await this.userRepository.createUser({
       name,
@@ -54,6 +88,7 @@ class CreateUserUseCase {
       isRecruiter,
       imgprofile,
       title,
+      curriculumfile,
     });
 
     return user;

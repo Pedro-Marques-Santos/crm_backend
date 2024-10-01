@@ -11,6 +11,7 @@ interface IUser {
   isRecruiter: boolean;
   _id?: string;
   imgprofile?: string;
+  curriculumfile?: string;
 }
 
 interface IRegisteredJobs {

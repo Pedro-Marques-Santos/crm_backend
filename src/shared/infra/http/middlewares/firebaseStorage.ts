@@ -6,7 +6,49 @@ import { AppError } from "../../../errors/AppErrors";
 
 const storage = multer.memoryStorage();
 
+const MAX_PDF_SIZE = 2 * 1024 * 1024; // 2MB;
+
 const uploadImageInMemory = multer({ storage }).single("file");
+
+const uploadMultiple = multer({ storage }).fields([
+  { name: "file", maxCount: 1 }, // Para a imagem
+  { name: "pdfFile", maxCount: 1 }, // Para o PDF
+]);
+
+async function uploadPDFtoFirebaseStorage(
+  file: Express.Multer.File,
+): Promise<string> {
+  try {
+    const fileExtension = "." + file.originalname.split(".").pop();
+
+    if (file.mimetype !== "application/pdf") {
+      throw new AppError("We only accept PDF files!", 400);
+    }
+
+    if (file.size > MAX_PDF_SIZE) {
+      throw new AppError(
+        `PDF is too large! Maximum size allowed is ${MAX_PDF_SIZE / (1024 * 1024)} MB`,
+        400,
+      );
+    }
+
+    const filename = `resumefolder/${uuidv4()}${fileExtension}`;
+
+    await bucketFirebaseStorage.file(filename).save(file.buffer, {
+      metadata: {
+        contentType: "application/pdf",
+      },
+    });
+
+    const url = `https://firebasestorage.googleapis.com/v0/b/${bucketFirebaseStorage.name}/o/${encodeURIComponent(
+      filename,
+    )}?alt=media`;
+
+    return url;
+  } catch (error) {
+    throw new AppError("Erro ao adicionar o PDF", 400);
+  }
+}
 
 async function uploadImageFirebaseStorage(
   file: Express.Multer.File,
@@ -19,7 +61,8 @@ async function uploadImageFirebaseStorage(
       .jpeg({ quality: 80 })
       .toBuffer();
 
-    const filename = uuidv4() + fileExtension;
+    // const filename = uuidv4() + fileExtension;
+    const filename = `imagesprofiles/${uuidv4()}${fileExtension}`;
 
     await bucketFirebaseStorage.file(filename).save(compressedBuffer, {
       metadata: {
@@ -35,6 +78,15 @@ async function uploadImageFirebaseStorage(
   }
 }
 
+function verifyFileStorage(file: Express.Multer.File) {
+  const allowedExtensions = [".pdf"];
+  const fileExtension = "." + file.originalname.split(".").pop();
+
+  if (!allowedExtensions.includes(fileExtension)) {
+    throw new AppError("We only accept PDF files!", 400);
+  }
+}
+
 function verifyImgStorage(file: Express.Multer.File) {
   const allowedExtensions = [".jpg", ".jpeg", ".png"];
   const fileExtension = "." + file.originalname.split(".").pop();
@@ -44,4 +96,11 @@ function verifyImgStorage(file: Express.Multer.File) {
   }
 }
 
-export { uploadImageInMemory, uploadImageFirebaseStorage, verifyImgStorage };
+export {
+  uploadImageInMemory,
+  uploadImageFirebaseStorage,
+  verifyImgStorage,
+  uploadMultiple,
+  verifyFileStorage,
+  uploadPDFtoFirebaseStorage,
+};

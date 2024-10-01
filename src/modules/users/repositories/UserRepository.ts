@@ -109,6 +109,7 @@ class UserRepository implements IUserRepository {
     isRecruiter,
     imgprofile,
     title,
+    curriculumfile,
   }: IUser): Promise<IUser> {
     const user = new User({
       name: name,
@@ -122,6 +123,7 @@ class UserRepository implements IUserRepository {
       isRecruiter: isRecruiter,
       imgprofile: imgprofile,
       title: title,
+      curriculumfile: curriculumfile,
     });
 
     const userResult = await user.save();

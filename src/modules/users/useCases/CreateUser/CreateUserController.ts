@@ -3,7 +3,10 @@ import { Response, Request } from "express";
 import { container } from "tsyringe";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 import { AppError } from "../../../../shared/errors/AppErrors";
-import { verifyImgStorage } from "../../../../shared/infra/http/middlewares/firebaseStorage";
+import {
+  verifyFileStorage,
+  verifyImgStorage,
+} from "../../../../shared/infra/http/middlewares/firebaseStorage";
 
 class CreateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
@@ -19,13 +22,26 @@ class CreateUserController {
       title,
     } = request.body;
 
-    const file = request.file;
+    const files = request.files as {
+      [fieldname: string]: Express.Multer.File[];
+    };
 
-    if (!request.file) {
-      throw new AppError("Erro ao tentar encontrar o arquivo file!", 400);
+    const imageFile = files?.file?.[0];
+    const pdfFile = files?.pdfFile?.[0];
+
+    if (!imageFile) {
+      throw new AppError("Erro ao tentar encontrar o arquivo de imagem!", 400);
     }
 
-    verifyImgStorage(file);
+    if (!pdfFile) {
+      throw new AppError("Erro ao tentar encontrar o arquivo PDF!", 400);
+    }
+
+    console.log("imageFile", imageFile);
+    console.log("pdfFile", pdfFile);
+
+    verifyImgStorage(imageFile);
+    verifyFileStorage(pdfFile);
 
     const idgoogle = request.user.id;
 
@@ -44,7 +60,8 @@ class CreateUserController {
         registeredjobs,
         isRecruiter,
       },
-      file,
+      imageFile,
+      pdfFile,
     );
 
     return response.json(user);

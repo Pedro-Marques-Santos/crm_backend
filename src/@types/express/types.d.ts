@@ -4,5 +4,6 @@ declare namespace Express {
       id: string;
     };
     file: any;
+    pdfFile: any;
   }
 }
