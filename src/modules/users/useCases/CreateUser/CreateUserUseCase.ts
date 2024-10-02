@@ -50,7 +50,26 @@ class CreateUserUseCase {
       );
     }
 
-    const imgprofile = await uploadImageFirebaseStorage(imageFile);
+    const user = await this.userRepository.createUser({
+      name,
+      idgoogle,
+      linkedinURL,
+      email,
+      workingGroup,
+      description,
+      date,
+      registeredjobs,
+      isRecruiter,
+      imgprofile: null,
+      title,
+      curriculumfile: null,
+    });
+
+    if (!user || !user._id) {
+      throw new AppError("Error ao criar usuário", 404);
+    }
+
+    const imgprofile = await uploadImageFirebaseStorage(imageFile, user._id);
 
     let compressedBuffer: Buffer;
 
@@ -71,27 +90,28 @@ class CreateUserUseCase {
       compressedBuffer = pdfFile.buffer;
     }
 
-    const curriculumfile = await uploadPDFtoFirebaseStorage({
-      ...pdfFile,
-      buffer: compressedBuffer,
-    });
+    const curriculumfile = await uploadPDFtoFirebaseStorage(
+      {
+        ...pdfFile,
+        buffer: compressedBuffer,
+      },
+      user._id,
+    );
 
-    const user = await this.userRepository.createUser({
-      name,
-      idgoogle,
-      linkedinURL,
-      email,
-      workingGroup,
-      description,
-      date,
-      registeredjobs,
-      isRecruiter,
+    const newUser = await this.userRepository.putImageAndPdfInUserProfile(
+      user,
       imgprofile,
-      title,
       curriculumfile,
-    });
+    );
 
-    return user;
+    if (!newUser) {
+      throw new AppError(
+        "User created successfully, but there was an error saving img and pdf",
+        500,
+      );
+    }
+
+    return newUser || user;
   }
 }
 

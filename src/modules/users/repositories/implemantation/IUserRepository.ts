@@ -2,6 +2,11 @@ import { IEmployment, IOurParticipants } from "../../../employment/interfaces";
 import { IUser } from "../../interfaces";
 
 interface IUserRepository {
+  putImageAndPdfInUserProfile(
+    user: IUser,
+    imgprofile: string,
+    curriculumfile: string,
+  ): Promise<IUser | null>;
   listJobRegistered(user: IUser): Promise<IEmployment[] | null>;
   addJobRegister(
     user: IUser,

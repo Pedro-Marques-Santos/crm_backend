@@ -37,9 +37,6 @@ class CreateUserController {
       throw new AppError("Erro ao tentar encontrar o arquivo PDF!", 400);
     }
 
-    console.log("imageFile", imageFile);
-    console.log("pdfFile", pdfFile);
-
     verifyImgStorage(imageFile);
     verifyFileStorage(pdfFile);
 

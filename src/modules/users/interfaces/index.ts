@@ -10,8 +10,8 @@ interface IUser {
   registeredjobs: IRegisteredJobs[];
   isRecruiter: boolean;
   _id?: string;
-  imgprofile?: string;
-  curriculumfile?: string;
+  imgprofile?: string | null;
+  curriculumfile?: string | null;
 }
 
 interface IRegisteredJobs {

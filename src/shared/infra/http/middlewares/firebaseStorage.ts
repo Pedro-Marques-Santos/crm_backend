@@ -1,6 +1,5 @@
 import multer from "multer";
 import sharp from "sharp";
-import { v4 as uuidv4 } from "uuid";
 import { bucketFirebaseStorage } from "../../../services/connectFirebaseSDK";
 import { AppError } from "../../../errors/AppErrors";
 
@@ -17,6 +16,7 @@ const uploadMultiple = multer({ storage }).fields([
 
 async function uploadPDFtoFirebaseStorage(
   file: Express.Multer.File,
+  iduser: string,
 ): Promise<string> {
   try {
     const fileExtension = "." + file.originalname.split(".").pop();
@@ -32,7 +32,7 @@ async function uploadPDFtoFirebaseStorage(
       );
     }
 
-    const filename = `resumefolder/${uuidv4()}${fileExtension}`;
+    const filename = `resumefolder/${iduser}${fileExtension}`;
 
     await bucketFirebaseStorage.file(filename).save(file.buffer, {
       metadata: {
@@ -46,12 +46,13 @@ async function uploadPDFtoFirebaseStorage(
 
     return url;
   } catch (error) {
-    throw new AppError("Erro ao adicionar o PDF", 400);
+    throw new AppError("Erro ao adicionar o PDF, mas usuário ", 400);
   }
 }
 
 async function uploadImageFirebaseStorage(
   file: Express.Multer.File,
+  iduser: string,
 ): Promise<string> {
   try {
     const fileExtension = "." + file.originalname.split(".").pop();
@@ -61,8 +62,7 @@ async function uploadImageFirebaseStorage(
       .jpeg({ quality: 80 })
       .toBuffer();
 
-    // const filename = uuidv4() + fileExtension;
-    const filename = `imagesprofiles/${uuidv4()}${fileExtension}`;
+    const filename = `imagesprofiles/${iduser}${fileExtension}`;
 
     await bucketFirebaseStorage.file(filename).save(compressedBuffer, {
       metadata: {
@@ -70,7 +70,9 @@ async function uploadImageFirebaseStorage(
       },
     });
 
-    const url = `https://firebasestorage.googleapis.com/v0/b/${bucketFirebaseStorage.name}/o/${filename}?alt=media`;
+    const url = `https://firebasestorage.googleapis.com/v0/b/${bucketFirebaseStorage.name}/o/${encodeURIComponent(
+      filename,
+    )}?alt=media`;
 
     return url;
   } catch (error) {

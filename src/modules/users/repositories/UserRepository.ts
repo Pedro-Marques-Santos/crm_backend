@@ -5,6 +5,25 @@ import { User } from "../model";
 import { IUserRepository } from "./implemantation/IUserRepository";
 
 class UserRepository implements IUserRepository {
+  async putImageAndPdfInUserProfile(
+    user: IUser,
+    imgprofile: string,
+    curriculumfile: string,
+  ): Promise<IUser | null> {
+    const newUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          imgprofile: imgprofile,
+          curriculumfile: curriculumfile,
+        },
+      },
+      { new: true },
+    );
+
+    return newUser;
+  }
+
   async saveUpdatedUsers(updatedUsers: IUser[]): Promise<void> {
     await Promise.all(
       updatedUsers.map(async (user) => {
