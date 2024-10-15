@@ -25,18 +25,27 @@ class CreateCompanyUseCase {
       throw new AppError("Email already registered", 409);
     }
 
-    const imgprofile = await uploadImageFirebaseStorage(file);
-
     const company = await this.companyRepository.createCompany({
       name,
       idgoogle,
       createdjobs,
       isRecruiter,
-      imgprofile,
+      imgprofile: null,
       email,
     });
 
-    return company;
+    if (!company || !company._id) {
+      throw new AppError("Error ao criar usuário", 404);
+    }
+
+    const imgprofile = await uploadImageFirebaseStorage(file, company._id);
+
+    const newCompany = await this.companyRepository.putImageInUserProfile(
+      company,
+      imgprofile,
+    );
+
+    return newCompany || company;
   }
 }
 

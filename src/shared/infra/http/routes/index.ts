@@ -11,6 +11,7 @@ import { expirationEmploymentRoute } from "./expirationEmploymentRoute";
 import { listAllEmploymentsRoute } from "./listAllEmploymentsRoute";
 import { nextStepRoute } from "./nextStepRoute";
 import { nextGroupStepRoute } from "./nextGroupStep";
+import { downloadUsersPdfsRoute } from "./DownloadUsersPdfsRoute";
 const routes = Router();
 
 routes.use("/listAllEmployments", listAllEmploymentsRoute);
@@ -25,5 +26,6 @@ routes.use("/listParticipantsEmployment", listParticipantsRoute);
 routes.use("/expirationEmployment", expirationEmploymentRoute);
 routes.use("/nextStep", nextStepRoute);
 routes.use("/nextGroupStep", nextGroupStepRoute);
+routes.use("/downloadPdfs", downloadUsersPdfsRoute);
 
 export { routes };

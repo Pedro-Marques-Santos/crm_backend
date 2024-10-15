@@ -5,6 +5,23 @@ import { Company } from "../model";
 import { ICompanyRepository } from "./implemantation/ICompanyRepository";
 
 class CompanyRepository implements ICompanyRepository {
+  async putImageInUserProfile(
+    user: ICompany,
+    imgprofile: string,
+  ): Promise<ICompany | null> {
+    const newUser = await Company.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          imgprofile: imgprofile,
+        },
+      },
+      { new: true },
+    );
+
+    return newUser;
+  }
+
   async saveUpdatedCompanies(updatedCompanies: ICompany[]): Promise<void> {
     await Promise.all(
       updatedCompanies.map(async (company) => {

@@ -5,7 +5,7 @@ interface ICompany {
   createdjobs: string[];
   isRecruiter: boolean;
   _id?: string;
-  imgprofile?: string;
+  imgprofile?: string | null;
 }
 
 export { ICompany };
