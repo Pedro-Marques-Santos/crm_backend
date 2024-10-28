@@ -16,6 +16,12 @@ interface ICompanyRepository {
     imgprofile,
   }: ICompany): Promise<ICompany>;
   findByIdGoogle(id: string): Promise<ICompany | null>;
+  findById(id: string): Promise<ICompany | null>;
+  editCompanyNoImg(
+    name: string,
+    email: string,
+    id: string,
+  ): Promise<ICompany | null>;
   filterListIdsCompanyMustDeletedInArrayEmplyoment(
     employmentsMustDeleted: IEmployment[],
   ): string[];

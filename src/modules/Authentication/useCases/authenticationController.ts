@@ -16,7 +16,7 @@ class AuthenticationController {
       return response.json({ status: "noRegister" });
     }
 
-    return response.json({ status: user ? user : company });
+    return response.json(user ?? company);
   }
 }
 

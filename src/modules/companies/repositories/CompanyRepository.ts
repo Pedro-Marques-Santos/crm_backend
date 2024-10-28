@@ -119,6 +119,27 @@ class CompanyRepository implements ICompanyRepository {
     return companyResult;
   }
 
+  async editCompanyNoImg(
+    name: string,
+    email: string,
+    id: string,
+  ): Promise<ICompany | null> {
+    const editCompany = await Company.findByIdAndUpdate(
+      id,
+      {
+        name: name,
+        email: email,
+      },
+      { new: true },
+    );
+    return editCompany;
+  }
+
+  async findById(id: string): Promise<ICompany | null> {
+    const company = await Company.findById(id);
+    return company;
+  }
+
   async findByIdGoogle(id: string): Promise<ICompany | null> {
     const company = await Company.findOne({ idgoogle: id });
     return company;

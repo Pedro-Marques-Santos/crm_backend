@@ -14,6 +14,26 @@ const uploadMultiple = multer({ storage }).fields([
   { name: "pdfFile", maxCount: 1 }, // Para o PDF
 ]);
 
+async function deletedImgFromFirebaseStorage(url: string): Promise<void> {
+  try {
+    const filePath = decodeURIComponent(
+      url.split("/o/")[1].split("?alt=media")[0],
+    );
+
+    if (!filePath.startsWith("imagesprofiles/")) {
+      throw new AppError("O arquivo não pertence à pasta imagesprofiles/", 400);
+    }
+
+    await bucketFirebaseStorage.file(filePath).delete();
+  } catch (error) {
+    if (error.code === 404) {
+      return;
+    } else {
+      throw new AppError("Erro ao deletar imagem", 400);
+    }
+  }
+}
+
 async function uploadPDFtoFirebaseStorage(
   file: Express.Multer.File,
   iduser: string,
@@ -105,4 +125,5 @@ export {
   uploadMultiple,
   verifyFileStorage,
   uploadPDFtoFirebaseStorage,
+  deletedImgFromFirebaseStorage,
 };
