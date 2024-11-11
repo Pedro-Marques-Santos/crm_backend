@@ -14,6 +14,7 @@ import { nextGroupStepRoute } from "./nextGroupStep";
 import { downloadUsersPdfsRoute } from "./DownloadUsersPdfsRoute";
 import { editCompanyNoImgRoute } from "./editCompanyRoute";
 import { editImgCompanyRoute } from "./editImgCompanyRoute";
+import { editEmploymentRoute } from "./editEmploymentRoute";
 const routes = Router();
 
 routes.use("/listAllEmployments", listAllEmploymentsRoute);
@@ -31,5 +32,6 @@ routes.use("/nextGroupStep", nextGroupStepRoute);
 routes.use("/downloadPdfs", downloadUsersPdfsRoute);
 routes.use("/editCompany", editCompanyNoImgRoute);
 routes.use("/editImgCompany", editImgCompanyRoute);
+routes.use("/editEmployment", editEmploymentRoute);
 
 export { routes };

@@ -1,5 +1,6 @@
 import {
   IEmployment,
+  IEmploymentUseCase,
   IOurParticipants,
   IUserParticipant,
 } from "../../interfaces";
@@ -59,6 +60,25 @@ interface IEmploymentRepository {
   ): Promise<IEmployment | null>;
   findById(idemployment: string): Promise<IEmployment | null>;
   listAllEmployment(): Promise<IEmployment[] | null>;
+  editEmployment(
+    {
+      name,
+      title,
+      description,
+      occupationarea,
+      entrylevel,
+      typehiring,
+      workmodality,
+      city,
+      region,
+      idgoogle,
+      questionaboutjob,
+      ourparticipants,
+      wage,
+      steps,
+    }: IEmploymentUseCase,
+    idemployment: string,
+  ): Promise<IEmployment | null>;
 }
 
 export { IEmploymentRepository };

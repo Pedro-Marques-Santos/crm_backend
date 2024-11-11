@@ -1,5 +1,10 @@
 import { User } from "../../users/model";
-import { IEmployment, IOurParticipants, IUserParticipant } from "../interfaces";
+import {
+  IEmployment,
+  IEmploymentUseCase,
+  IOurParticipants,
+  IUserParticipant,
+} from "../interfaces";
 import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
@@ -142,13 +147,13 @@ class EmploymentRepository implements IEmploymentRepository {
     iduser: string,
     questions: string[],
   ): Promise<IEmployment | null> {
-    const neweparticipant = {
+    const newparticipant = {
       id: iduser,
       questions: questions,
-      step: 0,
+      step: 1,
     };
 
-    employment.ourparticipants.push(neweparticipant);
+    employment.ourparticipants.push(newparticipant);
 
     const modifyCompany = await Employment.findOneAndUpdate(
       { _id: employment._id?.toString() },
@@ -156,6 +161,48 @@ class EmploymentRepository implements IEmploymentRepository {
     );
 
     return modifyCompany;
+  }
+
+  async editEmployment(
+    {
+      name,
+      title,
+      description,
+      occupationarea,
+      entrylevel,
+      typehiring,
+      workmodality,
+      city,
+      region,
+      idgoogle,
+      questionaboutjob,
+      ourparticipants,
+      wage,
+      steps,
+    }: IEmploymentUseCase,
+    idemployment: string,
+  ): Promise<IEmployment | null> {
+    const editEmployment = await Employment.findByIdAndUpdate(
+      idemployment,
+      {
+        name,
+        title,
+        description,
+        occupationarea,
+        entrylevel,
+        typehiring,
+        workmodality,
+        city,
+        region,
+        questionaboutjob,
+        ourparticipants,
+        wage,
+        steps,
+      },
+      { new: true },
+    );
+
+    return editEmployment;
   }
 
   async createEmployment({
