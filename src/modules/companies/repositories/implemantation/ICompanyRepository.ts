@@ -22,9 +22,6 @@ interface ICompanyRepository {
     email: string,
     id: string,
   ): Promise<ICompany | null>;
-  filterListIdsCompanyMustDeletedInArrayEmplyoment(
-    employmentsMustDeleted: IEmployment[],
-  ): string[];
   companiesMustBeEdited(
     listIdsCompanyMustDeletedInArrayEmplyoment: (string | undefined)[],
   ): Promise<ICompany[]>;

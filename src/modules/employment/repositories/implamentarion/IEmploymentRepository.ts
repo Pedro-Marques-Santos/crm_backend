@@ -6,6 +6,16 @@ import {
 } from "../../interfaces";
 
 interface IEmploymentRepository {
+  deleteEmploymentsExpired(idsEmploymentsMustDelete: string[]): Promise<void>;
+  findIdsCompaniesThatIdsEmploymentsMustDelete(
+    employmentsMustDeleted: IEmployment[],
+  ): string[];
+  findIdsUsersThatIdsEmploymentsMustDelete(
+    employmentsMustDeleted: IEmployment[],
+  ): string[];
+  findDateDeleteEmployments(): Promise<IEmployment[]>;
+  findExpiredEmployments(): Promise<IEmployment[]>;
+  ActiveDateExpirationInEmployments(idsEmployments: string[]): Promise<void>;
   modifyEmploymentWithAllNewSteps(
     participantsIndexes: number[],
     employment: IEmployment,
@@ -33,6 +43,7 @@ interface IEmploymentRepository {
   filterListIdsMustDeletedDate(
     employmentsMustDeleted: IEmployment[],
   ): string[] | null;
+  filterListIds(listIdsEmployment: IEmployment[]): string[] | null;
   employmentsMustDeletedDateCause(): Promise<IEmployment[] | null>;
   listParticipants(employment: IEmployment): Promise<IUserParticipant[] | []>;
   createEmployment({

@@ -9,6 +9,72 @@ import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  async deleteEmploymentsExpired(
+    idsEmploymentsMustDelete: string[],
+  ): Promise<void> {
+    await Employment.deleteMany({
+      _id: { $in: idsEmploymentsMustDelete },
+    });
+  }
+
+  findIdsCompaniesThatIdsEmploymentsMustDelete(
+    employmentsMustDeleted: IEmployment[],
+  ): string[] {
+    const listIdsCompanyMustDeletedInArrayEmplyoment = employmentsMustDeleted
+      .map((employment) => {
+        return employment.companyId;
+      })
+      .filter((employmentId) => employmentId !== undefined) as string[];
+
+    const listUsers = [...new Set(listIdsCompanyMustDeletedInArrayEmplyoment)];
+
+    return listUsers;
+  }
+
+  findIdsUsersThatIdsEmploymentsMustDelete(
+    employmentsMustDeleted: IEmployment[],
+  ): string[] {
+    const listAllUsersThatIdEmploymentMustDeleted =
+      employmentsMustDeleted.flatMap((employment) => {
+        return employment.ourparticipants.map((element) => {
+          return element.id;
+        });
+      });
+
+    const listUsersThatIdEmploymentMustDeleted = [
+      ...new Set(listAllUsersThatIdEmploymentMustDeleted),
+    ];
+
+    return listUsersThatIdEmploymentMustDeleted;
+  }
+
+  async findDateDeleteEmployments(): Promise<IEmployment[]> {
+    const employmentsExpiration = await Employment.find({
+      dataDelete: { $lte: new Date() },
+      dataExpirationActivity: true,
+    });
+
+    return employmentsExpiration;
+  }
+
+  async findExpiredEmployments(): Promise<IEmployment[]> {
+    const employmentsExpiration = await Employment.find({
+      dataExpiration: { $lte: new Date() },
+      dataExpirationActivity: false,
+    });
+
+    return employmentsExpiration;
+  }
+
+  async ActiveDateExpirationInEmployments(
+    idsEmployments: string[],
+  ): Promise<void> {
+    await Employment.updateMany(
+      { _id: { $in: idsEmployments } },
+      { dataExpirationActivity: true },
+    );
+  }
+
   modifyEmploymentWithAllNewSteps(
     participantsIndexes: number[],
     employment: IEmployment,
@@ -92,6 +158,16 @@ class EmploymentRepository implements IEmploymentRepository {
       .filter((id) => id !== undefined) as string[];
 
     return listIdsEmploymentMustDeleted ? listIdsEmploymentMustDeleted : null;
+  }
+
+  filterListIds(listIdsEmployment: IEmployment[]): string[] | null {
+    const listIds = listIdsEmployment
+      .map((employment) => {
+        return employment._id?.toString();
+      })
+      .filter((id) => id !== undefined) as string[];
+
+    return listIds ? listIds : null;
   }
 
   async employmentsMustDeletedDateCause(): Promise<IEmployment[] | null> {

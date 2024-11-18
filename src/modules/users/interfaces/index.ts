@@ -8,6 +8,7 @@ interface IUser {
   workingGroup: string[];
   date: Date;
   registeredjobs: IRegisteredJobs[];
+  jobsstatistics: IRegisteredJobs[];
   isRecruiter: boolean;
   _id?: string;
   imgprofile?: string | null;

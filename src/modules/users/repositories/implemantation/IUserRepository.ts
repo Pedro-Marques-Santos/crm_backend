@@ -13,6 +13,11 @@ interface IUserRepository {
     idemployment: string,
     date: Date,
   ): Promise<IUser | null>;
+  addRegisterStatistics(
+    user: IUser,
+    idemployment: string,
+    date: Date,
+  ): Promise<IUser | null>;
   createUser({
     name,
     idgoogle,
@@ -28,13 +33,10 @@ interface IUserRepository {
     curriculumfile,
   }: IUser): Promise<IUser>;
   findByIdGoogle(id: string): Promise<IUser | null>;
-  listAllUsersThatIdEmploymentMustDeleted(
-    employmentsMustDeleted: IEmployment[],
-  ): Promise<string[]>;
   findByUsersIds(
     listUsersThatIdEmploymentMustDeleted: string[],
   ): Promise<IUser[]>;
-  filterUpdatedUsers(
+  updatedUsersDateVacancyDelete(
     users: IUser[],
     listIdsEmploymentMustDeleted: string[],
   ): IUser[];

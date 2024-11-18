@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema<IUser>({
   description: String,
   date: { type: Date, required: true },
   registeredjobs: [{ _id: false, id: String, date: { type: Date } }],
+  jobsstatistics: [{ _id: false, id: String, date: { type: Date } }],
   isRecruiter: { type: Boolean },
   imgprofile: { type: String },
   curriculumfile: String,

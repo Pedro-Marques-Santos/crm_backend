@@ -60,6 +60,8 @@ class RegisterForJobUserUseCase {
       date,
     );
 
+    await this.userRepository.addRegisterStatistics(user, idemployment, date);
+
     const modifyEmployment = await this.employmentRepository.addJobParticipants(
       employment,
       user._id.toString(),

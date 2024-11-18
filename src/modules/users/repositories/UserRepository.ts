@@ -32,7 +32,7 @@ class UserRepository implements IUserRepository {
     );
   }
 
-  filterUpdatedUsers(
+  updatedUsersDateVacancyDelete(
     users: IUser[],
     listIdsEmploymentMustDeleted: string[],
   ): IUser[] {
@@ -45,23 +45,6 @@ class UserRepository implements IUserRepository {
     });
 
     return updatedUsers;
-  }
-
-  async listAllUsersThatIdEmploymentMustDeleted(
-    employmentsMustDeleted: IEmployment[],
-  ): Promise<string[]> {
-    const listAllUsersThatIdEmploymentMustDeleted =
-      employmentsMustDeleted.flatMap((employment) => {
-        return employment.ourparticipants.map((element) => {
-          return element.id;
-        });
-      });
-
-    const listUsersThatIdEmploymentMustDeleted = [
-      ...new Set(listAllUsersThatIdEmploymentMustDeleted),
-    ];
-
-    return listUsersThatIdEmploymentMustDeleted;
   }
 
   async findByUsersIds(
@@ -90,6 +73,26 @@ class UserRepository implements IUserRepository {
     });
 
     return listJobsCreated ? listJobsCreated : [];
+  }
+
+  async addRegisterStatistics(
+    user: IUser,
+    idemployment: string,
+    date: Date,
+  ): Promise<IUser | null> {
+    const jobsstatistics = {
+      id: idemployment,
+      date: date,
+    };
+
+    user.jobsstatistics.push(jobsstatistics);
+
+    const modifyCompany = await User.findOneAndUpdate(
+      { idgoogle: user.idgoogle },
+      user,
+    );
+
+    return modifyCompany;
   }
 
   async addJobRegister(
@@ -125,6 +128,7 @@ class UserRepository implements IUserRepository {
     description,
     date,
     registeredjobs,
+    jobsstatistics,
     isRecruiter,
     imgprofile,
     title,
@@ -139,6 +143,7 @@ class UserRepository implements IUserRepository {
       description: description,
       date: date,
       registeredjobs: registeredjobs,
+      jobsstatistics,
       isRecruiter: isRecruiter,
       imgprofile: imgprofile,
       title: title,

@@ -55,20 +55,6 @@ class CompanyRepository implements ICompanyRepository {
     return companies;
   }
 
-  filterListIdsCompanyMustDeletedInArrayEmplyoment(
-    employmentsMustDeleted: IEmployment[],
-  ): string[] {
-    const listIdsCompanyMustDeletedInArrayEmplyoment = employmentsMustDeleted
-      .map((employment) => {
-        return employment.companyId;
-      })
-      .filter((employmentId) => employmentId !== undefined) as string[];
-
-    const listUsers = [...new Set(listIdsCompanyMustDeletedInArrayEmplyoment)];
-
-    return listUsers;
-  }
-
   async listJobsCreated(company: ICompany): Promise<IEmployment[] | []> {
     const listJobsCreatedInPromise = (await Employment.find({
       _id: { $in: company.createdjobs },
