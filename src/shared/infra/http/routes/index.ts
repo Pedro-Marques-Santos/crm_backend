@@ -16,6 +16,8 @@ import { editImgCompanyRoute } from "./editImgCompanyRoute";
 import { editEmploymentRoute } from "./editEmploymentRoute";
 import { activeDateExpirationRoute } from "./activeDateExpirationRoute";
 import { deleteEmploymentsExpirationsRoute } from "./deleteEmploymentsExpirationRoute";
+import { listCreatedJobsExpiredRoute } from "./listCreatedJobsExpiredRoute";
+
 const routes = Router();
 
 routes.use("/listAllEmployments", listAllEmploymentsRoute);
@@ -35,5 +37,6 @@ routes.use("/editImgCompany", editImgCompanyRoute);
 routes.use("/editEmployment", editEmploymentRoute);
 routes.use("/activeDateExpiration", activeDateExpirationRoute);
 routes.use("/deleteEmploymentsExpirations", deleteEmploymentsExpirationsRoute);
+routes.use("/listCreatedJobsExpired", listCreatedJobsExpiredRoute);
 
 export { routes };

@@ -6,6 +6,7 @@ interface ICompanyRepository {
     user: ICompany,
     imgprofile: string,
   ): Promise<ICompany | null>;
+  listJobsCreatedExpired(company: ICompany): Promise<IEmployment[] | []>;
   listJobsCreated(company: ICompany): Promise<IEmployment[] | []>;
   addJobOpportunity(company: ICompany, idjob: string): Promise<ICompany | null>;
   createCompany({

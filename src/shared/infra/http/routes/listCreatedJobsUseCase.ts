@@ -6,7 +6,7 @@ const listCreatedJobsRoute = Router();
 
 const listCreateJobsController = new ListCreatedJobsController();
 
-listCreatedJobsRoute.post("/", googleAuthentication, (request, response) => {
+listCreatedJobsRoute.get("/", googleAuthentication, (request, response) => {
   return listCreateJobsController.handle(request, response);
 });
 
