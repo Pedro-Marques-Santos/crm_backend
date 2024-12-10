@@ -5,6 +5,8 @@ import { ICompanyRepository } from "../../modules/companies/repositories/implema
 import { CompanyRepository } from "../../modules/companies/repositories/CompanyRepository";
 import { IEmploymentRepository } from "../../modules/employment/repositories/implamentarion/IEmploymentRepository";
 import { EmploymentRepository } from "../../modules/employment/repositories/EmploymentRepository";
+import { EmailRepository } from "../../modules/Email/repostiories/EmailRepository";
+import { IEmailRepository } from "../../modules/Email/repostiories/implementation/IEmailRepository";
 
 container.registerSingleton<IUserRepository>("UserRepository", UserRepository);
 
@@ -16,4 +18,9 @@ container.registerSingleton<ICompanyRepository>(
 container.registerSingleton<IEmploymentRepository>(
   "EmploymentRepository",
   EmploymentRepository,
+);
+
+container.registerSingleton<IEmailRepository>(
+  "EmailRepository",
+  EmailRepository,
 );

@@ -17,6 +17,9 @@ import { editEmploymentRoute } from "./editEmploymentRoute";
 import { activeDateExpirationRoute } from "./activeDateExpirationRoute";
 import { deleteEmploymentsExpirationsRoute } from "./deleteEmploymentsExpirationRoute";
 import { listCreatedJobsExpiredRoute } from "./listCreatedJobsExpiredRoute";
+import { recruiterSendEmailRoute } from "./recruiterSendEmailRoute";
+import { processEmailRoute } from "./processEmailRoute";
+import { recruiterSendNewStepEmailRoute } from "./recruiterSendNewStepEmailRoute";
 
 const routes = Router();
 
@@ -38,5 +41,8 @@ routes.use("/editEmployment", editEmploymentRoute);
 routes.use("/activeDateExpiration", activeDateExpirationRoute);
 routes.use("/deleteEmploymentsExpirations", deleteEmploymentsExpirationsRoute);
 routes.use("/listCreatedJobsExpired", listCreatedJobsExpiredRoute);
+routes.use("/recruiterSendEmail", recruiterSendEmailRoute);
+routes.use("/processEmail", processEmailRoute);
+routes.use("/recruiterSendMessagesNewStep", recruiterSendNewStepEmailRoute);
 
 export { routes };

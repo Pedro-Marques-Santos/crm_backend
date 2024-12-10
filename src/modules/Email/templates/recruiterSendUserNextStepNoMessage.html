@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      width: 80%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      background-color: #4925e9;
+      padding: 15px 0;
+      border-radius: 8px 8px 0 0;
+    }
+    .header h1 {
+      color: #ffffff;
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 20px;
+      color: #333333;
+      line-height: 1.6;
+    }
+    .content p {
+      margin: 10px 0;
+    }
+    .highlight {
+      color: #4925e9;
+      font-weight: bold;
+    }
+    .message {
+      font-style: italic;
+      background-color: #f9f9f9;
+      border-left: 4px solid #4925e9;
+      padding: 10px 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #777777;
+      padding: 15px;
+    }
+    h5 {
+      color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <h5>Teste</h5>
+  <div class="container">
+    <div class="header">
+      <h1>Easy Recruiter</h1>
+    </div>
+    <div class="content">
+      <p>Parabéns! Você avançou para a etapa <span class="highlight">{{nameStage}}</span>, que é a <span class="highlight">{{currentStage}}</span> etapa de um total de <span class="highlight">{{totalStage}}</span> etapas.</p>
+      <p>Temos o prazer de informar que você foi selecionado para a próxima etapa do processo seletivo para a vaga de <span class="highlight">{{jobTitle}}</span> na empresa <span class="highlight">{{companyName}}</span>.</p>
+      <p>Entre em contato com o recrutador se tiver alguma dúvida:</p>
+      <p><strong>E-mail do Recrutador:</strong> <span class="highlight">{{emailRecruiter}}</span></p>
+      <p>Boa sorte na próxima fase!</p>
+      <p>Atenciosamente,</p>
+      <p><strong>Equipe EasyRecruiter</strong></p>
+    </div>
+    <div class="footer">
+      <p>Esta mensagem foi enviada pela plataforma EasyRecruiter. Por favor, não responda a este e-mail.</p>
+    </div>
+  </div>
+  <h5>Teste</h5>
+</body>
+</html>
