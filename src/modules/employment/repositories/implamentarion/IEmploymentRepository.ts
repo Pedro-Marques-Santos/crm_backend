@@ -6,6 +6,17 @@ import {
 } from "../../interfaces";
 
 interface IEmploymentRepository {
+  reactiveEmployment(
+    employment: IEmployment,
+    currentDate: Date,
+    newDataExpiration: Date,
+    newDateDelete: Date,
+  ): Promise<IEmployment | null>;
+  calculateNewDates(qtDays: number): Promise<{
+    currentDate: Date;
+    newDataExpiration: Date;
+    newDateDelete: Date;
+  }>;
   deleteEmploymentsExpired(idsEmploymentsMustDelete: string[]): Promise<void>;
   findIdsCompaniesThatIdsEmploymentsMustDelete(
     employmentsMustDeleted: IEmployment[],
@@ -69,6 +80,7 @@ interface IEmploymentRepository {
     iduser: string,
     questions: string[],
   ): Promise<IEmployment | null>;
+  findByIdExpiration(idemployment: string): Promise<IEmployment | null>;
   findById(idemployment: string): Promise<IEmployment | null>;
   listAllEmployment(): Promise<IEmployment[] | null>;
   editEmployment(

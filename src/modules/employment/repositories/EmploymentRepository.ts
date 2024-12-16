@@ -9,6 +9,38 @@ import { Employment } from "../model";
 import { IEmploymentRepository } from "./implamentarion/IEmploymentRepository";
 
 class EmploymentRepository implements IEmploymentRepository {
+  async reactiveEmployment(
+    employment: IEmployment,
+    currentDate: Date,
+    newDataExpiration: Date,
+    newDateDelete: Date,
+  ): Promise<IEmployment | null> {
+    const editEmployment = await Employment.findByIdAndUpdate(
+      employment._id,
+      {
+        createdAt: currentDate,
+        dataExpiration: newDataExpiration,
+        dataDelete: newDateDelete,
+        dataExpirationActivity: false,
+      },
+      { new: true },
+    );
+
+    return editEmployment;
+  }
+
+  async calculateNewDates(qtDays: number) {
+    const currentDate = new Date();
+
+    const newDataExpiration = new Date(currentDate);
+    newDataExpiration.setDate(currentDate.getDate() + qtDays);
+
+    const newDateDelete = new Date(currentDate);
+    newDateDelete.setDate(currentDate.getDate() + qtDays + 15);
+
+    return { currentDate, newDataExpiration, newDateDelete };
+  }
+
   async deleteEmploymentsExpired(
     idsEmploymentsMustDelete: string[],
   ): Promise<void> {
@@ -199,6 +231,15 @@ class EmploymentRepository implements IEmploymentRepository {
     }) as IUserParticipant[];
 
     return users ? users : [];
+  }
+
+  async findByIdExpiration(idemployment: string): Promise<IEmployment | null> {
+    const employment = await Employment.findOne({
+      _id: idemployment,
+      dataExpirationActivity: true,
+    });
+
+    return employment;
   }
 
   async findById(idemployment: string): Promise<IEmployment | null> {

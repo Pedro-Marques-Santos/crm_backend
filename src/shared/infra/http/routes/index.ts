@@ -20,6 +20,7 @@ import { listCreatedJobsExpiredRoute } from "./listCreatedJobsExpiredRoute";
 import { recruiterSendEmailRoute } from "./recruiterSendEmailRoute";
 import { processEmailRoute } from "./processEmailRoute";
 import { recruiterSendNewStepEmailRoute } from "./recruiterSendNewStepEmailRoute";
+import { reactiveEmploymentRoute } from "./reactiveEmploymentRoute";
 
 const routes = Router();
 
@@ -44,5 +45,6 @@ routes.use("/listCreatedJobsExpired", listCreatedJobsExpiredRoute);
 routes.use("/recruiterSendEmail", recruiterSendEmailRoute);
 routes.use("/processEmail", processEmailRoute);
 routes.use("/recruiterSendMessagesNewStep", recruiterSendNewStepEmailRoute);
+routes.use("/reactiveEmployment", reactiveEmploymentRoute);
 
 export { routes };
