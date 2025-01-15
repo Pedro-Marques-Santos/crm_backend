@@ -9,10 +9,32 @@ const MAX_PDF_SIZE = 2 * 1024 * 1024; // 2MB;
 
 const uploadImageInMemory = multer({ storage }).single("file");
 
+const uploadPdfInMemory = multer({ storage }).single("file");
+
 const uploadMultiple = multer({ storage }).fields([
   { name: "file", maxCount: 1 }, // Para a imagem
   { name: "pdfFile", maxCount: 1 }, // Para o PDF
 ]);
+
+async function deletedPdfFromFirebaseStorage(url: string): Promise<void> {
+  try {
+    const filePath = decodeURIComponent(
+      url.split("/o/")[1].split("?alt=media")[0],
+    );
+
+    if (!filePath.startsWith("resumefolder/")) {
+      throw new AppError("O arquivo não pertence à pasta imagesprofiles/", 400);
+    }
+
+    await bucketFirebaseStorage.file(filePath).delete();
+  } catch (error) {
+    if (error.code === 404) {
+      return;
+    } else {
+      throw new AppError("Erro ao deletar imagem", 400);
+    }
+  }
+}
 
 async function deletedImgFromFirebaseStorage(url: string): Promise<void> {
   try {
@@ -104,6 +126,13 @@ function verifyFileStorage(file: Express.Multer.File) {
   const allowedExtensions = [".pdf"];
   const fileExtension = "." + file.originalname.split(".").pop();
 
+  if (file.size > MAX_PDF_SIZE) {
+    throw new AppError(
+      `PDF is too large! Maximum size allowed is ${MAX_PDF_SIZE / (1024 * 1024)} MB`,
+      400,
+    );
+  }
+
   if (!allowedExtensions.includes(fileExtension)) {
     throw new AppError("We only accept PDF files!", 400);
   }
@@ -126,4 +155,6 @@ export {
   verifyFileStorage,
   uploadPDFtoFirebaseStorage,
   deletedImgFromFirebaseStorage,
+  deletedPdfFromFirebaseStorage,
+  uploadPdfInMemory,
 };

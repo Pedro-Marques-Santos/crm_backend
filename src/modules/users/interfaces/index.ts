@@ -1,3 +1,5 @@
+import { IEmployment } from "../../employment/interfaces";
+
 interface IUser {
   name: string;
   title: string;
@@ -20,4 +22,19 @@ interface IRegisteredJobs {
   date: Date;
 }
 
-export { IUser };
+interface IListJobsCreated {
+  step: number | undefined;
+  employment: IEmployment;
+}
+
+interface IEditUserNoImg {
+  name: string;
+  email: string;
+  date: Date;
+  description: string;
+  linkedinURL: string;
+  id: string;
+  workingGroup: string[];
+}
+
+export { IUser, IListJobsCreated, IEditUserNoImg };

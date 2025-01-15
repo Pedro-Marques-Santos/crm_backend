@@ -1,10 +1,44 @@
 import { IEmployment, IOurParticipants } from "../../employment/interfaces";
 import { Employment } from "../../employment/model";
-import { IUser } from "../interfaces";
+import { IEditUserNoImg, IListJobsCreated, IUser } from "../interfaces";
 import { User } from "../model";
 import { IUserRepository } from "./implemantation/IUserRepository";
 
 class UserRepository implements IUserRepository {
+  async putPdfInUserProfile(
+    user: IUser,
+    curriculumfile: string,
+  ): Promise<IUser | null> {
+    const newUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          curriculumfile: curriculumfile,
+        },
+      },
+      { new: true },
+    );
+
+    return newUser;
+  }
+
+  async putImageInUserProfile(
+    user: IUser,
+    imgprofile: string,
+  ): Promise<IUser | null> {
+    const newUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          imgprofile: imgprofile,
+        },
+      },
+      { new: true },
+    );
+
+    return newUser;
+  }
+
   async putImageAndPdfInUserProfile(
     user: IUser,
     imgprofile: string,
@@ -57,22 +91,62 @@ class UserRepository implements IUserRepository {
     return users;
   }
 
-  async listJobRegistered(user: IUser): Promise<IEmployment[] | null> {
-    const listJobsCreatedInPromise = (await Employment.find({
-      _id: { $in: user.registeredjobs.map((job) => job.id) },
+  async listJobRegistered(user: IUser): Promise<IListJobsCreated[]> {
+    const registeredJobIds = user.registeredjobs.map((job) => job.id);
+    const jobs = (await Employment.find({
+      _id: { $in: registeredJobIds },
     })) as IEmployment[];
 
-    const sortedJobs = listJobsCreatedInPromise.sort((a, b) => {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
-      return dateB - dateA;
-    });
+    const listJobsCreated: IListJobsCreated[] = jobs
+      .reverse()
+      .map((job) => {
+        const participant = job.ourparticipants.find(
+          (p) => p.id === user._id?.toString(),
+        );
 
-    const listJobsCreated = sortedJobs.map((employment: IEmployment) => {
-      return employment;
-    });
+        if (
+          participant &&
+          participant.step &&
+          job.steps[participant.step - 1]
+        ) {
+          const stepName = job.steps[participant.step - 1].stepName;
 
-    return listJobsCreated ? listJobsCreated : [];
+          return {
+            step: participant.step,
+            stepName: stepName,
+            employment: job,
+          };
+        }
+
+        return null;
+      })
+      .filter((job) => job !== null) as IListJobsCreated[];
+
+    return listJobsCreated;
+  }
+
+  async EditUserNoImg({
+    name,
+    description,
+    date,
+    linkedinURL,
+    email,
+    id,
+    workingGroup,
+  }: IEditUserNoImg): Promise<IUser | null> {
+    const editUser = await User.findByIdAndUpdate(
+      id,
+      {
+        name: name,
+        email: email,
+        description: description,
+        date: date,
+        linkedinURL: linkedinURL,
+        workingGroup: workingGroup,
+      },
+      { new: true },
+    );
+    return editUser;
   }
 
   async addRegisterStatistics(

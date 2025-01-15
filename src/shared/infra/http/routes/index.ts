@@ -21,6 +21,9 @@ import { recruiterSendEmailRoute } from "./recruiterSendEmailRoute";
 import { processEmailRoute } from "./processEmailRoute";
 import { recruiterSendNewStepEmailRoute } from "./recruiterSendNewStepEmailRoute";
 import { reactiveEmploymentRoute } from "./reactiveEmploymentRoute";
+import { editUserNoImgRoute } from "./editUserNoImgRoute";
+import { editImgUserRoute } from "./editImgUserRoute";
+import { editResumeRoute } from "./editResumeRoute";
 
 const routes = Router();
 
@@ -38,6 +41,7 @@ routes.use("/nextGroupStep", nextGroupStepRoute);
 routes.use("/downloadPdfs", downloadUsersPdfsRoute);
 routes.use("/editCompany", editCompanyNoImgRoute);
 routes.use("/editImgCompany", editImgCompanyRoute);
+routes.use("/editImgUser", editImgUserRoute);
 routes.use("/editEmployment", editEmploymentRoute);
 routes.use("/activeDateExpiration", activeDateExpirationRoute);
 routes.use("/deleteEmploymentsExpirations", deleteEmploymentsExpirationsRoute);
@@ -46,5 +50,7 @@ routes.use("/recruiterSendEmail", recruiterSendEmailRoute);
 routes.use("/processEmail", processEmailRoute);
 routes.use("/recruiterSendMessagesNewStep", recruiterSendNewStepEmailRoute);
 routes.use("/reactiveEmployment", reactiveEmploymentRoute);
+routes.use("/editUser", editUserNoImgRoute);
+routes.use("/editResume", editResumeRoute);
 
 export { routes };

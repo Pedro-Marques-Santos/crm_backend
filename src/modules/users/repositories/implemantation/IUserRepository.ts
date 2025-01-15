@@ -1,13 +1,26 @@
-import { IEmployment, IOurParticipants } from "../../../employment/interfaces";
-import { IUser } from "../../interfaces";
+import { IEditUserNoImg, IListJobsCreated, IUser } from "../../interfaces";
 
 interface IUserRepository {
+  putPdfInUserProfile(
+    user: IUser,
+    curriculumfile: string,
+  ): Promise<IUser | null>;
+  putImageInUserProfile(user: IUser, imgprofile: string): Promise<IUser | null>;
   putImageAndPdfInUserProfile(
     user: IUser,
     imgprofile: string,
     curriculumfile: string,
   ): Promise<IUser | null>;
-  listJobRegistered(user: IUser): Promise<IEmployment[] | null>;
+  EditUserNoImg({
+    name,
+    description,
+    date,
+    linkedinURL,
+    email,
+    id,
+    workingGroup,
+  }: IEditUserNoImg): Promise<IUser | null>;
+  listJobRegistered(user: IUser): Promise<IListJobsCreated[] | []>;
   addJobRegister(
     user: IUser,
     idemployment: string,
