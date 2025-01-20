@@ -44,9 +44,9 @@ class CreateUserUseCase {
       throw new AppError("email already registered", 409);
     }
 
-    if (workingGroup.length < 3 || workingGroup.length > 10) {
+    if (workingGroup.length < 3 || workingGroup.length > 6) {
       throw new AppError(
-        "Working group can not more than ten or less than three",
+        "Working group can not more than 6 or less than three",
         404,
       );
     }

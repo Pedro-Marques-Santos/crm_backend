@@ -4,10 +4,25 @@ import { container } from "tsyringe";
 import { CreateCompanyUseCase } from "./CreateCompanyUseCase";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import { verifyImgStorage } from "../../../../shared/infra/http/middlewares/firebaseStorage";
+import { CompanyValidationSchema } from "../../validation/Company";
 
 class CreateCompanyController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, createdjobs, isRecruiter, email } = request.body;
+
+    const validationResult = CompanyValidationSchema.safeParse({
+      name,
+      email,
+    });
+
+    if (!validationResult.success) {
+      const validationErrors = validationResult.error.errors.map((err) => ({
+        path: err.path.join("."),
+        message: err.message,
+      }));
+
+      return response.status(400).json({ errors: validationErrors });
+    }
 
     const file = request.file;
 
