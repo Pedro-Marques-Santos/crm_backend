@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IEmailRepository } from "../../repostiories/implementation/IEmailRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import path from "path";
+import { emailQueue } from "../../../../shared/services/connectRedisEmailQueue";
 
 @injectable()
 class RecruiterSendEmailUseCase {
@@ -30,6 +31,10 @@ class RecruiterSendEmailUseCase {
       __dirname,
       "../../templates/recruiterSendMessageToUser.html",
     );
+
+    if (!emailQueue.client.status || emailQueue.client.status !== "ready") {
+      throw new AppError("Redis is unavailable. Please try again later.", 503);
+    }
 
     await this.emailRepository.sendRecruiterMessage(
       to,

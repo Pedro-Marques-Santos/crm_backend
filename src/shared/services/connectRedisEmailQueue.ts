@@ -20,6 +20,8 @@ const emailQueue = new Queue("emailQueue", {
       : undefined,
     password: process.env.REDIS_PASSWORD,
     username: process.env.REDIS_USERNAME,
+    connectTimeout: 5000,
+    maxRetriesPerRequest: 2,
   },
 });
 

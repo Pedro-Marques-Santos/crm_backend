@@ -3,6 +3,7 @@ import { IEmailRepository } from "../../repostiories/implementation/IEmailReposi
 import { IRecruiterSendMessageSteps } from "../../interfaces";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import path from "path";
+import { emailQueue } from "../../../../shared/services/connectRedisEmailQueue";
 
 @injectable()
 class RecruiterSendNewStepEmailUseCase {
@@ -36,6 +37,10 @@ class RecruiterSendNewStepEmailUseCase {
           __dirname,
           "../../templates/recruiterSendUserNextStepNoMessage.html",
         );
+
+    if (!emailQueue.client.status || emailQueue.client.status !== "ready") {
+      throw new AppError("Redis is unavailable. Please try again later.", 503);
+    }
 
     await Promise.all(
       allTo

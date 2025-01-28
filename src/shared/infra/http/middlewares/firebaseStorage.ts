@@ -97,21 +97,23 @@ async function uploadImageFirebaseStorage(
   iduser: string,
 ): Promise<string> {
   try {
-    const fileExtension = "." + file.originalname.split(".").pop();
-
+    // Converte a imagem para JPEG com redimensionamento e compressão
     const compressedBuffer = await sharp(file.buffer)
-      .resize({ width: 200, height: 200 })
-      .jpeg({ quality: 80 })
+      .resize({ width: 200, height: 200 }) // Redimensiona a imagem
+      .jpeg({ quality: 80 }) // Converte para JPEG com qualidade 80%
       .toBuffer();
 
-    const filename = `imagesprofiles/${iduser}${fileExtension}`;
+    // Nome do arquivo sempre como JPEG
+    const filename = `imagesprofiles/${iduser}.jpeg`;
 
+    // Salva a imagem no Firebase Storage
     await bucketFirebaseStorage.file(filename).save(compressedBuffer, {
       metadata: {
-        contentType: "image/jpeg",
+        contentType: "image/jpeg", // Tipo de conteúdo JPEG
       },
     });
 
+    // Gera a URL pública da imagem
     const url = `https://firebasestorage.googleapis.com/v0/b/${bucketFirebaseStorage.name}/o/${encodeURIComponent(
       filename,
     )}?alt=media`;

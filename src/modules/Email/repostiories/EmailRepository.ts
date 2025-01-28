@@ -27,8 +27,9 @@ class EmailRepository implements IEmailRepository {
         htmlTemplate,
       },
       {
-        attempts: 1, // Tentar enviar até 1 vezes em caso de falha
+        attempts: 3, // Tentar enviar até 1 vezes em caso de falha
         removeOnComplete: false, // Opcional: Manter histórico para depuração
+        backoff: { type: "exponential", delay: 2000 },
       },
     );
   }
