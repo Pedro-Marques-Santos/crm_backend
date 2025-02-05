@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../repositories/implemantation/IUserRepository";
 import { AppError } from "../../../../shared/errors/AppErrors";
+import { IListJobsCreated } from "../../interfaces";
 
 @injectable()
 class ListJobRegisteredUseCase {
@@ -9,7 +10,7 @@ class ListJobRegisteredUseCase {
     private userRepository: IUserRepository,
   ) {}
 
-  async execute(userid: string) {
+  async execute(userid: string): Promise<IListJobsCreated[] | []> {
     const user = await this.userRepository.findByIdGoogle(userid);
 
     if (!user) {
@@ -17,7 +18,7 @@ class ListJobRegisteredUseCase {
     }
 
     if (user.registeredjobs.length === 0) {
-      throw new AppError("You have not registered for any vacancy!", 404);
+      return [];
     }
 
     if (user.registeredjobs.length < 1) {

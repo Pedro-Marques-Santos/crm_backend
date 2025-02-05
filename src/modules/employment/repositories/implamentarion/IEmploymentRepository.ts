@@ -82,6 +82,7 @@ interface IEmploymentRepository {
   ): Promise<IEmployment | null>;
   findByIdExpiration(idemployment: string): Promise<IEmployment | null>;
   findById(idemployment: string): Promise<IEmployment | null>;
+  findByIdNotExpired(idemployment: string): Promise<IEmployment | null>;
   listAllEmployment(): Promise<IEmployment[] | null>;
   editEmployment(
     {

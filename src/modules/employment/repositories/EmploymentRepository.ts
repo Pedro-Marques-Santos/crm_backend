@@ -242,6 +242,15 @@ class EmploymentRepository implements IEmploymentRepository {
     return employment;
   }
 
+  async findByIdNotExpired(idemployment: string): Promise<IEmployment | null> {
+    const employment = await Employment.findOne({
+      _id: idemployment,
+      dataExpirationActivity: false,
+    });
+
+    return employment;
+  }
+
   async findById(idemployment: string): Promise<IEmployment | null> {
     const employment = await Employment.findById(idemployment);
 
