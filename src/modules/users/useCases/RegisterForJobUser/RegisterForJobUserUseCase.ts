@@ -41,8 +41,8 @@ class RegisterForJobUserUseCase {
       );
     }
 
-    const userexist = user.registeredjobs.some((job) =>
-      job.id.includes(idemployment),
+    const userexist = user.registeredjobs.some(
+      (job) => job.id && job.id.includes(idemployment),
     );
 
     const userexistinemployment = employment.ourparticipants.find(
