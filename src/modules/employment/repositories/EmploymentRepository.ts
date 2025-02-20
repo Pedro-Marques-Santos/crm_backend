@@ -220,7 +220,8 @@ class EmploymentRepository implements IEmploymentRepository {
 
     const users = listUsers.map((user) => {
       const participant = employment.ourparticipants.find(
-        (participant) => participant.id.toString() === user._id.toString(),
+        (participant) =>
+          participant.id && participant.id.toString() === user._id.toString(),
       );
 
       return {
