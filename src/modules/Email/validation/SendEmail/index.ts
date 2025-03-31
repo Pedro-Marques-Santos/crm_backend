@@ -11,7 +11,7 @@ export const SendEmailValidationSchema = z.object({
     .email("Email must be a valid email address")
     .max(150, "Email must have at most 150 characters"),
   message: z.string().max(600, "Message must have at most 600 characters"),
-  subject: z.string().max(80, "Subject max 80 caracteres"),
+  subject: z.string().max(130, "Subject max 130 caracteres"),
   companyName: z.string().max(60, "Name must have at most 60 characters"),
 });
 

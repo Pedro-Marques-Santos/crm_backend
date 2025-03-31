@@ -5,11 +5,15 @@ import { NextStepUseCase } from "./NextStepUseCase";
 
 class NextStepController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { iduser, idemployment } = request.body;
+    const { iduser, idemployment, statusEmplyoment } = request.body;
 
     const nextStepUseCase = container.resolve(NextStepUseCase);
 
-    const newEmployment = await nextStepUseCase.execute(idemployment, iduser);
+    const newEmployment = await nextStepUseCase.execute(
+      idemployment,
+      iduser,
+      statusEmplyoment,
+    );
 
     return response.json(newEmployment);
   }

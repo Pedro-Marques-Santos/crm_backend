@@ -24,11 +24,11 @@ class RegisterForJobUserUseCase {
     const employment = await this.employmentRepository.findById(idemployment);
 
     if (!user || !user._id) {
-      throw new AppError("User does not exist!", 400);
+      throw new AppError("Resource not found: User does not exist!", 404);
     }
 
     if (!employment || !employment._id) {
-      throw new AppError("Job vacancy does not exist!", 400);
+      throw new AppError("Job vacancy does not exist!", 404);
     }
 
     if (
@@ -36,7 +36,7 @@ class RegisterForJobUserUseCase {
       questions.length !== employment.questionaboutjob.length
     ) {
       throw new AppError(
-        "You must answer all of the Recruiter's questions!",
+        "Validation failed: Please provide answers to all required questions!",
         422,
       );
     }
@@ -51,7 +51,10 @@ class RegisterForJobUserUseCase {
     );
 
     if (userexist || userexistinemployment) {
-      throw new AppError("User is already registered for this vacancy!", 400);
+      throw new AppError(
+        "Conflict: User is already registered for this job vacancy!",
+        409,
+      );
     }
 
     const modifyUser = await this.userRepository.addJobRegister(
@@ -70,7 +73,7 @@ class RegisterForJobUserUseCase {
 
     if (!modifyUser || !modifyEmployment) {
       throw new AppError(
-        "Error when registering in new selection process!",
+        "Operation failed: Unable to complete the registration process!",
         400,
       );
     }

@@ -5,7 +5,7 @@ import { ListParticipantsUseCases } from "./ListParticipantesUseCase";
 
 class ListParticipantsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { idemployment } = request.body;
+    const { idemployment, statusEmplyoment } = request.body;
 
     const userid = request.user.id;
 
@@ -14,6 +14,7 @@ class ListParticipantsController {
     const listParticipants = await listParticipantsUseCase.execute(
       userid,
       idemployment,
+      statusEmplyoment,
     );
 
     return response.json(listParticipants);

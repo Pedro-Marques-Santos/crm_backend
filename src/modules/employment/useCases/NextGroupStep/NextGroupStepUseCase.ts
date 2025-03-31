@@ -10,7 +10,11 @@ class NextGroupStepUseCase {
     private employmentRepository: IEmploymentRepository,
   ) {}
 
-  async execute(idemployment: string, idusers: string[]): Promise<IEmployment> {
+  async execute(
+    idemployment: string,
+    idusers: string[],
+    statusEmplyoment: boolean,
+  ): Promise<IEmployment> {
     if (idusers.length > 10) {
       throw new AppError(
         "The maximum number of users allowed to advance in the group per step is 10!",
@@ -22,6 +26,17 @@ class NextGroupStepUseCase {
 
     if (!employment) {
       throw new AppError("Job vacancy not found in the system!", 404);
+    }
+
+    if (statusEmplyoment === null || statusEmplyoment === undefined) {
+      throw new AppError("Employment status not found!", 404);
+    }
+
+    if (employment.dataExpirationActivity !== statusEmplyoment) {
+      throw new AppError(
+        "The employment status has been updated. Please refresh the page to see the latest changes.",
+        409,
+      );
     }
 
     const participantsIndexes =

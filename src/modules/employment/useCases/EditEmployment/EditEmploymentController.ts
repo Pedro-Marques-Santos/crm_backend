@@ -21,6 +21,7 @@ class EditEmploymentController {
       wage,
       steps,
       idemployment,
+      statusEmplyoment,
     } = request.body;
 
     const validationResult = EmploymentValidationSchema.safeParse({
@@ -69,6 +70,7 @@ class EditEmploymentController {
         idgoogle,
       },
       idemployment,
+      statusEmplyoment,
     );
 
     return response.json(employment);

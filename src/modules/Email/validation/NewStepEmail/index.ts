@@ -13,7 +13,7 @@ export const NewStepEmailValidationSchema = z.object({
     .string()
     .email("Email must be a valid email address")
     .max(150, "Email must have at most 150 characters"),
-  subject: z.string().max(80, "Subject must have at most 80 characters"),
+  subject: z.string().max(130, "Subject must have at most 130 characters"),
   message: z.string().max(600, "Message must have at most 600 characters"),
   jobTitle: z.string().max(70, "Job title must have at most 70 characters"),
   companyName: z

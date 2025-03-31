@@ -16,6 +16,7 @@ class ListParticipantsUseCases {
   async execute(
     idgoogle: string,
     idemployment: string,
+    statusEmplyoment: boolean,
   ): Promise<IUserParticipant[]> {
     const employment = await this.employmentRepository.findById(idemployment);
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
@@ -26,6 +27,17 @@ class ListParticipantsUseCases {
 
     if (!employment) {
       throw new AppError("Job vacancy not found in the system!", 404);
+    }
+
+    if (statusEmplyoment === null || statusEmplyoment === undefined) {
+      throw new AppError("Employment status not found!", 404);
+    }
+
+    if (employment.dataExpirationActivity !== statusEmplyoment) {
+      throw new AppError(
+        "The employment status has been updated. Please refresh the page to see the latest changes.",
+        409,
+      );
     }
 
     const listParticipants =

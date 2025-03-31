@@ -31,12 +31,24 @@ class EditEmploymentUseCase {
       idgoogle,
     }: IEmploymentUseCase,
     idemployment: string,
+    statusEmplyoment: boolean,
   ): Promise<IEmployment> {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
     const employment = await this.employmentRepository.findById(idemployment);
 
     if (!employment || !company) {
       throw new AppError("Employment does not found!", 404);
+    }
+
+    if (statusEmplyoment === null || statusEmplyoment === undefined) {
+      throw new AppError("Employment status not found!", 404);
+    }
+
+    if (employment.dataExpirationActivity !== statusEmplyoment) {
+      throw new AppError(
+        "The employment status has been updated. Please refresh the page to see the latest changes.",
+        409,
+      );
     }
 
     if (employment.companyId !== company._id?.toString()) {

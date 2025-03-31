@@ -10,11 +10,26 @@ class NextStepUseCase {
     private employmentRepository: IEmploymentRepository,
   ) {}
 
-  async execute(idemployment: string, iduser: string): Promise<IEmployment> {
+  async execute(
+    idemployment: string,
+    iduser: string,
+    statusEmplyoment: boolean,
+  ): Promise<IEmployment> {
     const employment = await this.employmentRepository.findById(idemployment);
 
     if (!employment) {
       throw new AppError("Job vacancy not found in the system!", 404);
+    }
+
+    if (statusEmplyoment === null || statusEmplyoment === undefined) {
+      throw new AppError("Employment status not found!", 404);
+    }
+
+    if (employment.dataExpirationActivity !== statusEmplyoment) {
+      throw new AppError(
+        "The employment status has been updated. Please refresh the page to see the latest changes.",
+        409,
+      );
     }
 
     const participantIndex = this.employmentRepository.findIndexOurparticipant(

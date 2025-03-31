@@ -5,13 +5,14 @@ import { NextGroupStepUseCase } from "./NextGroupStepUseCase";
 
 class NextGroupStepController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { idusers, idemployment } = request.body;
+    const { idusers, idemployment, statusEmplyoment } = request.body;
 
     const nextGroupStepUseCase = container.resolve(NextGroupStepUseCase);
 
     const newEmployment = await nextGroupStepUseCase.execute(
       idemployment,
       idusers,
+      statusEmplyoment,
     );
 
     return response.json(newEmployment);
