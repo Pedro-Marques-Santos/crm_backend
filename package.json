@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r dotenv/config ./src/shared/infra/http/server.ts"
+    "dev": "ts-node-dev -r dotenv/config ./src/shared/infra/http/server.ts",
+    "build": "tsc",
+    "start": "node -r dotenv/config dist/shared/infra/http/server.js"
   },
   "devDependencies": {
     "@types/archiver": "^6.0.2",

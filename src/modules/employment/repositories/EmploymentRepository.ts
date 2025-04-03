@@ -169,7 +169,9 @@ class EmploymentRepository implements IEmploymentRepository {
   }
 
   async listAllEmployment(): Promise<IEmployment[] | null> {
-    const listAllEmployments = await Employment.find();
+    const listAllEmployments = await Employment.find({
+      dataExpirationActivity: false,
+    });
 
     const sortedEmployments = listAllEmployments.sort((a, b) => {
       const dateA = new Date(a.createdAt).getTime();

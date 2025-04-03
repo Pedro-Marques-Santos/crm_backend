@@ -28,8 +28,6 @@ class DownloadUserPdfsUseCase {
             .pop()
             ?.split("?")[0];
 
-          console.log(fileName);
-
           if (fileName) {
             archive.append(pdfResponse.data, { name: fileName }); // Adiciona o PDF ao ZIP
           }

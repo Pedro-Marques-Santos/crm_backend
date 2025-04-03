@@ -10,6 +10,7 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node", "express", "./src/@types/express/types.d.ts"]
   }
 }
