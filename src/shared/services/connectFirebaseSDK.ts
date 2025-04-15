@@ -1,17 +1,11 @@
 import admin from "firebase-admin";
 const serviceAccount = require("../../../firebase.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: "gs://projet-crm-firebase.appspot.com",
-});
-
-const uid = "server-admin";
-
-const additionalClaims = {
-  admin: true,
-};
-
-admin.auth().createCustomToken(uid, additionalClaims);
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "projet-crm-firebase.appspot.com",
+  });
+}
 
 export const bucketFirebaseStorage = admin.storage().bucket();
