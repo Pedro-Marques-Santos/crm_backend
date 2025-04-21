@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev -r dotenv/config ./src/shared/infra/http/server.ts",
     "build": "tsc && npm run copy:templates",
-    "copy:templates": "cp -r src/modules/Email/templates dist/modules/Email/templates",
+    "copy:templates": "mkdir -p dist/modules/Email && cp -r src/modules/Email/templates dist/modules/Email/",
     "start": "node -r dotenv/config dist/shared/infra/http/server.js"
   },
   "devDependencies": {
