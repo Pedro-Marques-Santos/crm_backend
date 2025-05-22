@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../shared/errors/AppErrors";
 import { ICompanyRepository } from "../../repositories/implemantation/ICompanyRepository";
+import { IEmployment } from "../../../employment/interfaces";
 
 @injectable()
 class ListCreatedJobsUseCase {
@@ -9,7 +10,7 @@ class ListCreatedJobsUseCase {
     private companyRepository: ICompanyRepository,
   ) {}
 
-  async execute(idgoogleuser: string) {
+  async execute(idgoogleuser: string): Promise<IEmployment[] | []> {
     const company = await this.companyRepository.findByIdGoogle(idgoogleuser);
 
     if (!company) {
@@ -17,7 +18,7 @@ class ListCreatedJobsUseCase {
     }
 
     if (company.createdjobs.length === 0) {
-      throw new AppError("You have not created any job openings!", 404);
+      return [];
     }
 
     if (company.createdjobs.length < 0) {

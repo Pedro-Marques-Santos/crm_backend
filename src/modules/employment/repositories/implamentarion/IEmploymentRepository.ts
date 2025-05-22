@@ -1,6 +1,7 @@
 import {
   IEmployment,
   IEmploymentUseCase,
+  IExpirationResult,
   IOurParticipants,
   IUserParticipant,
 } from "../../interfaces";
@@ -103,6 +104,7 @@ interface IEmploymentRepository {
     }: IEmploymentUseCase,
     idemployment: string,
   ): Promise<IEmployment | null>;
+  calculateDatesExpiration(expirationDays?: number): IExpirationResult;
 }
 
 export { IEmploymentRepository };

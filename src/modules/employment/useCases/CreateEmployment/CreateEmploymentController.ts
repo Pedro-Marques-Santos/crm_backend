@@ -20,6 +20,7 @@ class CreateEmploymentController {
       ourparticipants,
       wage,
       steps,
+      expirationDays,
     } = request.body;
 
     const validationResult = EmploymentValidationSchema.safeParse({
@@ -35,6 +36,7 @@ class CreateEmploymentController {
       questionaboutjob,
       wage,
       steps,
+      expirationDays,
     });
 
     if (!validationResult.success) {
@@ -65,6 +67,7 @@ class CreateEmploymentController {
       ourparticipants,
       wage,
       steps,
+      expirationDays,
     });
 
     return response.json(employmnet);

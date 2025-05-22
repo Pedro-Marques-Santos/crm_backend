@@ -7,7 +7,7 @@ export const EmploymentValidationSchema = z.object({
     .max(40, "Name must have at most 40 characters"),
   title: z
     .string()
-    .min(5, "Title must have at least 3 characters")
+    .min(3, "Title must have at least 3 characters")
     .max(70, "Title must have at most 70 characters"),
   entrylevel: z
     .string()
@@ -53,6 +53,7 @@ export const EmploymentValidationSchema = z.object({
     .min(20, "Description must have at least 20 characters")
     .max(3500, "Description must have at most 3500 characters"),
   wage: z.array(z.number()).length(2, "Wage must have exactly 2 elements"),
+  expirationDays: z.number().optional(),
 });
 
 export default { EmploymentValidationSchema };

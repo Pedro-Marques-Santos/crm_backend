@@ -28,9 +28,14 @@ class CreateEmploymentUseCase {
     ourparticipants,
     wage,
     steps,
+    expirationDays,
   }: IEmploymentUseCase): Promise<IEmployment> {
     const company = await this.companyRepository.findByIdGoogle(idgoogle);
+
     const createdAt: Date = new Date();
+
+    const { dataExpiration, dataDelete } =
+      this.employmentRepository.calculateDatesExpiration(expirationDays);
 
     if (!company || !company.imgprofile) {
       throw new AppError("Company was not found in the system!", 400);
@@ -68,6 +73,8 @@ class CreateEmploymentUseCase {
       companyImg: company.imgprofile,
       createdAt,
       steps,
+      dataExpiration,
+      dataDelete,
     });
 
     if (!emploment._id) {

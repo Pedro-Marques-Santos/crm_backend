@@ -2,6 +2,7 @@ import { User } from "../../users/model";
 import {
   IEmployment,
   IEmploymentUseCase,
+  IExpirationResult,
   IOurParticipants,
   IUserParticipant,
 } from "../interfaces";
@@ -334,6 +335,24 @@ class EmploymentRepository implements IEmploymentRepository {
     return editEmployment;
   }
 
+  calculateDatesExpiration(expirationDays?: number): IExpirationResult {
+    const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+    const createdAt = new Date();
+
+    const validExpirationDays = expirationDays ?? 10;
+    const validDeleteDays = expirationDays != null ? expirationDays + 10 : 15;
+
+    const dataExpiration = new Date(
+      createdAt.getTime() + validExpirationDays * MILLISECONDS_PER_DAY,
+    );
+
+    const dataDelete = new Date(
+      createdAt.getTime() + validDeleteDays * MILLISECONDS_PER_DAY,
+    );
+
+    return { dataExpiration, dataDelete };
+  }
+
   async createEmployment({
     name,
     title,
@@ -351,6 +370,8 @@ class EmploymentRepository implements IEmploymentRepository {
     companyImg,
     createdAt,
     steps,
+    dataExpiration,
+    dataDelete,
   }: IEmployment): Promise<IEmployment> {
     const employment = new Employment({
       name,
@@ -370,6 +391,8 @@ class EmploymentRepository implements IEmploymentRepository {
       companyImg,
       createdAt,
       steps,
+      dataExpiration,
+      dataDelete,
     });
 
     const employmentResult = await employment.save();

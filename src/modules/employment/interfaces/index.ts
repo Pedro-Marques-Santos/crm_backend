@@ -38,6 +38,7 @@ interface IEmploymentUseCase {
   questionaboutjob?: string[];
   wage: String[];
   steps: ISteps[];
+  expirationDays?: number;
 }
 
 interface ISteps {
@@ -55,4 +56,15 @@ interface IUserParticipant {
   questions: string[];
 }
 
-export { IEmployment, IEmploymentUseCase, IOurParticipants, IUserParticipant };
+interface IExpirationResult {
+  dataExpiration: Date;
+  dataDelete: Date;
+}
+
+export {
+  IEmployment,
+  IEmploymentUseCase,
+  IOurParticipants,
+  IUserParticipant,
+  IExpirationResult,
+};

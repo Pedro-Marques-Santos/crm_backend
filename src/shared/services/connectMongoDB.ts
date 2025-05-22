@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 function connectToDatabase(): void {
-  mongoose.set("debug", true); // loga todas as queries no console
+  // mongoose.set("debug", true); // loga todas as queries no console
 
   console.log("🟡 Tentando conectar ao MongoDB...");
 

@@ -25,6 +25,7 @@ import { editUserNoImgRoute } from "./editUserNoImgRoute";
 import { editImgUserRoute } from "./editImgUserRoute";
 import { editResumeRoute } from "./editResumeRoute";
 import { SearchEmploymentRoute } from "./SearchEmploymentRoute";
+import { deleteEmploymentRoute } from "./deleteEmploymentRoute";
 
 const routes = Router();
 
@@ -54,5 +55,6 @@ routes.use("/reactiveEmployment", reactiveEmploymentRoute);
 routes.use("/editUser", editUserNoImgRoute);
 routes.use("/editResume", editResumeRoute);
 routes.use("/searchEmployment", SearchEmploymentRoute);
+routes.use("/deleteEmployment", deleteEmploymentRoute);
 
 export { routes };
